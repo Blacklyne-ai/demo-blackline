@@ -1,0 +1,110 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SellWizard from '../components/SellWizard.astro';
+import WhyChooseUs from '../components/WhyChooseUs.astro';
+import { buyBrands, contact } from '../data/site';
+import sellbrands from '../data/sellbrands.json';
+import { ClipboardList, CalendarClock, Banknote, ShieldCheck, Gauge, Wallet, Handshake, ArrowRight } from '@lucide/astro';
+
+export async function getStaticPaths() {
+  return buyBrands.map((b) => ({ params: { sellBrand: b.slug }, props: { brand: b } }));
+}
+const { brand } = Astro.props;
+const c: any = (sellbrands as any)[brand.slug] || {};
+const why = [
+  { icon: Gauge, title: 'Tailored Valuation', body: `Get an accurate and competitive price for your ${brand.name} in just minutes.` },
+  { icon: ShieldCheck, title: 'Hassle-Free Process', body: 'We handle the whole process, so you don’t have to worry about the details.' },
+  { icon: Wallet, title: 'Quick Payments', body: 'Receive payment on the spot — no delays, no complications.' },
+  { icon: Handshake, title: 'Trusted Service', body: 'Our experienced team ensures a smooth and transparent transaction every step of the way.' },
+];
+const steps = [
+  { icon: ClipboardList, title: 'Get a Quote', body: `Provide your ${brand.name} details for an instant valuation.` },
+  { icon: CalendarClock, title: 'Book an Appointment', body: 'Schedule a free, no-obligation car inspection at a time that suits you.' },
+  { icon: Banknote, title: 'Get Paid', body: 'Accept our offer, and we’ll handle the rest.' },
+];
+// strip the leading "We buy X's –" lead so we can show models as a sentence
+const models: string = c.models || '';
+---
+<Layout title={`Sell My ${brand.name} in Dubai | Blackline Motor Company`}
+  description={c.intro || `Sell your ${brand.name} in Dubai with Blackline Motor Company. Tailored valuation, hassle-free process, quick payment.`}>
+
+  <!-- Hero -->
+  <section class="bg-ink pt-[calc(var(--nav-h)+2rem)]">
+    <div class="lux-wide grid items-start gap-12 pb-16 lg:grid-cols-[1fr_0.92fr] lg:gap-16 lg:pb-24">
+      <div class="lg:pt-6">
+        <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>Sell my {brand.name}</p>
+        <h1 class="mt-5 display-1 text-ivory">Sell my {brand.name}</h1>
+        {c.subhead && <p class="mt-5 font-display text-xl font-semibold text-mist">{c.subhead}</p>}
+        <p class="mt-5 max-w-md text-[1.02rem] leading-relaxed text-mist">{c.intro || `We make selling your ${brand.name} in Dubai a simple and stress-free process. Our goal is to offer you the best value for your car.`}</p>
+        <div class="mt-9"><WhyChooseUs /></div>
+      </div>
+      <div data-reveal>
+        <SellWizard id={`sell-${brand.slug}`} preselectMake={brand.make} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Why sell with us -->
+  <section class="border-t border-ivory/[0.06] bg-coal py-20 lg:py-28">
+    <div class="lux-wide">
+      <div class="mb-12 max-w-2xl">
+        <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>Why sell with us</p>
+        <h2 class="mt-5 display-2 text-ivory">Why sell your {brand.name} with us?</h2>
+      </div>
+      <div class="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-ivory/[0.08] bg-ivory/[0.08] sm:grid-cols-2 lg:grid-cols-4">
+        {why.map((w) => (
+          <div class="flex flex-col gap-3 bg-graphite p-7">
+            <span class="grid h-11 w-11 place-items-center rounded-full border border-gold/30 text-gold"><w.icon class="h-5 w-5" /></span>
+            <h3 class="mt-1 font-display text-base font-semibold text-ivory">{w.title}</h3>
+            <p class="text-[0.9rem] leading-relaxed text-mist">{w.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="border-t border-ivory/[0.06] py-20 lg:py-28">
+    <div class="lux-wide">
+      <div class="mb-12 max-w-2xl">
+        <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>How it works</p>
+        <h2 class="mt-5 display-2 text-ivory">Three steps to a sale</h2>
+      </div>
+      <div class="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-ivory/[0.08] bg-ivory/[0.08] md:grid-cols-3">
+        {steps.map((s, i) => (
+          <div class="relative bg-graphite p-8">
+            <span class="absolute right-6 top-6 font-display text-4xl font-bold text-ivory/[0.06]">0{i + 1}</span>
+            <span class="grid h-12 w-12 place-items-center rounded-full border border-gold/30 text-gold"><s.icon class="h-5 w-5" /></span>
+            <h3 class="mt-5 font-display text-lg font-semibold text-ivory">{s.title}</h3>
+            <p class="mt-2 text-[0.92rem] leading-relaxed text-mist">{s.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Models + FAQ -->
+  <section class="border-t border-ivory/[0.06] bg-coal py-20 lg:py-28">
+    <div class="lux-wide grid gap-10 lg:grid-cols-[1.2fr_1fr]">
+      <div>
+        <h2 class="display-3 text-ivory">How much will I get for my {brand.name}?</h2>
+        <p class="mt-5 max-w-xl text-[1.0rem] leading-relaxed text-mist">{c.how || `Blackline Motor Company is known to buy premium and luxury cars. If you are a proud ${brand.name} owner looking to sell, get a quote from us.`}</p>
+        {models && <p class="mt-6 max-w-xl text-[0.92rem] leading-relaxed text-faint">{models}</p>}
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#main" class="btn-gold">Sell now</a>
+          <a href={contact.whatsapp} target="_blank" rel="noopener" class="btn-outline">WhatsApp us <ArrowRight class="h-4 w-4" /></a>
+        </div>
+      </div>
+      <div class="rounded-2xl border border-ivory/[0.08] bg-graphite p-7">
+        <p class="eyebrow">Ready to sell?</p>
+        <p class="mt-4 text-[1.0rem] leading-relaxed text-mist">Ready to sell your {brand.name} in Dubai? Contact us now and experience an easy and reliable selling process.</p>
+        <ul class="mt-6 space-y-3 text-sm text-ivory/80">
+          <li class="flex items-center gap-2"><ShieldCheck class="h-4 w-4 text-gold" /> Free, no-obligation valuation</li>
+          <li class="flex items-center gap-2"><Banknote class="h-4 w-4 text-gold" /> Instant payment, no fees</li>
+          <li class="flex items-center gap-2"><Handshake class="h-4 w-4 text-gold" /> RTA transfer handled for you</li>
+        </ul>
+        <a href={contact.phonePrimaryHref} class="btn-outline btn-block mt-6">Call {contact.phonePrimary}</a>
+      </div>
+    </div>
+  </section>
+</Layout>

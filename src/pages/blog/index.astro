@@ -1,0 +1,56 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import blog from '../../data/blog.json';
+import { ArrowRight } from '@lucide/astro';
+
+const fmtDate = (d: string) => new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+const posts = [...blog].sort((a, b) => +new Date(b.date) - +new Date(a.date));
+---
+<Layout title="Blog | Blackline Motor Company — Buying & Selling Cars in Dubai"
+  description="The Blackline Motor Company journal — expert guidance on buying, selling and consigning premium cars in Dubai and across the UAE.">
+
+  <!-- Hero -->
+  <section class="bg-ink pt-[calc(var(--nav-h)+2rem)]">
+    <div class="lux-wide pb-16 lg:pb-24">
+      <div class="max-w-3xl">
+        <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>Journal</p>
+        <h1 class="mt-5 display-1 text-ivory">Blog</h1>
+        <p class="mt-7 max-w-2xl text-[1.05rem] leading-relaxed text-mist">
+          Expert guidance on buying, selling and consigning premium cars in Dubai and across the UAE —
+          notes from the Blackline Motor Company team.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Posts grid -->
+  <section class="border-t border-ivory/[0.06] bg-coal py-20 lg:py-28">
+    <div class="lux-wide">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {posts.map((p, i) => (
+          <a href={`/blog/${p.slug}`} class="card group flex flex-col p-7 transition-colors duration-500 hover:border-gold/40" data-reveal data-delay={(i % 3) * 60}>
+            <p class="text-[0.72rem] uppercase tracking-[0.18em] text-faint">{fmtDate(p.date)}</p>
+            <h2 class="mt-4 font-display text-[1.35rem] font-semibold leading-[1.18] text-ivory transition-colors group-hover:text-gold">{p.title}</h2>
+            <p class="mt-4 line-clamp-3 text-[0.95rem] leading-relaxed text-mist">{p.excerpt}</p>
+            <span class="link-arrow mt-7">Read more <ArrowRight class="h-4 w-4" /></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="border-t border-ivory/[0.06] py-20 lg:py-28">
+    <div class="lux-narrow text-center">
+      <h2 class="display-2 text-ivory">Ready to sell your car in the UAE?</h2>
+      <p class="mt-6 text-[1.05rem] leading-relaxed text-mist">
+        Contact us today for a free, no-obligation valuation and let our experienced team guide you
+        through a seamless selling process.
+      </p>
+      <div class="mt-9 flex flex-wrap justify-center gap-3">
+        <a href="/sell-your-car" class="btn-gold">Get your free valuation <ArrowRight class="h-4 w-4" /></a>
+        <a href="/our-cars" class="btn-outline">View our cars</a>
+      </div>
+    </div>
+  </section>
+</Layout>

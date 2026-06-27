@@ -1,0 +1,17 @@
+---
+// "Brands we buy" — quiet wordmark tiles, each linking to its /sell-my-[brand]
+// landing page. MOBILE: one tile per row (grid-cols-1), per the non-negotiable
+// mobile rule. Brand marks are rendered as type (monochrome) — real brand logos
+// are an Operator-TODO (trademark assets). See JUDGEMENT_CALLS.md.
+import { ArrowUpRight } from '@lucide/astro';
+import { buyBrands } from '../data/site';
+---
+<div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+  {buyBrands.map((b) => (
+    <a href={`/${b.slug}`}
+      class="group flex items-center justify-between rounded-xl border border-ivory/[0.08] bg-graphite px-5 py-5 transition-all duration-300 hover:border-gold/40 hover:bg-steel/40">
+      <span class="font-display text-[1.05rem] font-semibold tracking-tight text-ivory transition-colors group-hover:text-gold">{b.name}</span>
+      <ArrowUpRight class="h-4 w-4 text-faint transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-gold" />
+    </a>
+  ))}
+</div>

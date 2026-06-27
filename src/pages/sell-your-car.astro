@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SellWizard from '../components/SellWizard.astro';
+import WhyChooseUs from '../components/WhyChooseUs.astro';
+import BrandGrid from '../components/BrandGrid.astro';
+import { contact } from '../data/site';
+import { ClipboardList, CalendarClock, Banknote, ArrowRight } from '@lucide/astro';
+
+const steps = [
+  { icon: ClipboardList, title: 'Get a quote', body: 'Provide your car details for an instant, no-obligation valuation.' },
+  { icon: CalendarClock, title: 'Book an appointment', body: 'Schedule a free inspection at our Ras Al Khor showroom, at a time that suits you.' },
+  { icon: Banknote, title: 'Get paid', body: 'Accept our offer and we’ll handle the rest — instant payment, no fees, RTA transfer included.' },
+];
+---
+<Layout title="Sell Your Premium Car in Dubai | Blackline Motor Company"
+  description="Sell your premium car in Dubai with Blackline Motor Company. Top prices for high-spec vehicles, free no-obligation valuation, instant payment and no fees.">
+
+  <!-- Hero + Wizard -->
+  <section class="bg-ink pt-[calc(var(--nav-h)+2rem)]">
+    <div class="lux-wide grid items-start gap-12 pb-16 lg:grid-cols-[1fr_0.92fr] lg:gap-16 lg:pb-24">
+      <div class="lg:pt-6">
+        <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>Top prices · No fees · Instant payment</p>
+        <h1 class="mt-5 display-1 text-ivory">Sell your premium car</h1>
+        <p class="mt-6 max-w-md text-[1.05rem] leading-relaxed text-mist">
+          We are always looking for excellent quality cars for our customers. Tell us about yours and one
+          of our specialists will come back with a free, no-obligation price — fast.
+        </p>
+        <div class="mt-9">
+          <WhyChooseUs />
+        </div>
+      </div>
+      <div data-reveal>
+        <SellWizard id="sellpage" />
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="border-t border-ivory/[0.06] bg-coal py-20 lg:py-28">
+    <div class="lux-wide">
+      <div class="mb-12 max-w-2xl">
+        <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>How it works</p>
+        <h2 class="mt-5 display-2 text-ivory">Sell your car in 4 easy steps</h2>
+        <p class="mt-5 text-[1.02rem] leading-relaxed text-mist">A simple, stress-free process — from valuation to instant payment.</p>
+      </div>
+      <div class="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-ivory/[0.08] bg-ivory/[0.08] md:grid-cols-3">
+        {steps.map((s, i) => (
+          <div class="relative bg-graphite p-8">
+            <span class="absolute right-6 top-6 font-display text-4xl font-bold text-ivory/[0.06]">0{i + 1}</span>
+            <span class="grid h-12 w-12 place-items-center rounded-full border border-gold/30 text-gold"><s.icon class="h-5 w-5" /></span>
+            <h3 class="mt-5 font-display text-lg font-semibold text-ivory">{s.title}</h3>
+            <p class="mt-2 text-[0.92rem] leading-relaxed text-mist">{s.body}</p>
+          </div>
+        ))}
+      </div>
+      <p class="mt-6 text-sm text-faint">Step 4 — drive home happy. We also accept part exchange and trade-ins against any car in our showroom.</p>
+    </div>
+  </section>
+
+  <!-- Brands we buy -->
+  <section class="border-t border-ivory/[0.06] py-20 lg:py-28">
+    <div class="lux-wide">
+      <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>Brands we buy</p>
+          <h2 class="mt-5 display-3 text-ivory">We buy all premium makes</h2>
+        </div>
+        <a href={contact.whatsapp} target="_blank" rel="noopener" class="link-arrow">Message us <ArrowRight class="h-4 w-4" /></a>
+      </div>
+      <BrandGrid />
+      <p class="mt-8 max-w-2xl text-sm leading-relaxed text-faint">
+        We are always on the lookout for new excellent quality stock for our customers — typically 2018 models
+        and newer, under 100,000 km, GCC specs, with full dealer service history and dealer/agency warranty.
+      </p>
+    </div>
+  </section>
+</Layout>

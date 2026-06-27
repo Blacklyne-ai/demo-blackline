@@ -1,0 +1,126 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { contact } from '../data/site';
+import { Megaphone, ShieldCheck, Handshake, Wallet, Star, ArrowRight, MessageCircle } from '@lucide/astro';
+
+const benefits = [
+  {
+    icon: Megaphone,
+    title: 'Professional Marketing',
+    body: 'Blackline Motor Company’s marketing programme means that your car will receive industry leading multi-media coverage, guaranteeing exposure and giving you the best chance to find a buyer. Upon receiving your vehicle, our in-house photographer will take professional photos of the exterior and interior of the car. We will advertise your car not just on our own website and social media pages, but also leading providers such as Dubizzle and Dubicars.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Convenience & Peace of Mind',
+    body: 'We work hard at Blackline Motor Company to make sure every step of the consignment process is seamless and provides you peace of mind. As all customer appointments and enquiries for your car will be taking place at our showroom, you gain the added benefits of both security and convenience by avoiding the need for strangers to visit your home and entrusting the payment process to professionals. Convenience means knowing that you won’t have to take valuable time out of your day to wait for potential buyers to show up or handle their questions about the car’s history or maintenance. Selling your car with us at Blackline Motor Company allows you to relax at home knowing everything is being taken care of.',
+  },
+  {
+    icon: Handshake,
+    title: 'Added benefits & protection for buyer & seller',
+    body: 'The added benefit of consigning your car with us is that our service can protect you from any customer complaints about any defects or aftersales issues. Furthermore, the benefit of selling the vehicle via a registered car dealer is that we can offer a warranty (where required) upon the sale giving added confidence to the potential buyer. Most importantly, with most cars being sold in the UAE on finance, Blackline Motor Company can offer the buyer flexible finance packages with all the leading UAE Banks to help maximise the enquiries for your car. We also offer trade in or part exchange options that make purchasing a new car much easier for customers.',
+  },
+  {
+    icon: Wallet,
+    title: 'No Fees',
+    body: 'When you consign your car with us at Blackline Motor Company, as a seller there are simply no fees for you to pay. Following an appointment with one of our Consignment Specialists, we would need the consignment vehicle paperwork so that we can undertake a market appraisal, agree an accurate valuation and that both parties are happy with. We will handle all the payment process for you and of course the RTA ownership transfer.',
+  },
+];
+
+const testimonials = [
+  {
+    name: 'Sami Charbaji',
+    quote:
+      'The experience of selling my car was absolutely amazing. This was my first experience where they handled everything, without having to visit the showroom or meet anyone in person. But I immediately trusted them and their services, and I do not regret it. Everything was done from the comfort of my home. My car was collected from my door step and sold at the asking price I wanted. The team was very professional and transparent. Special thanks to John, Rik, and Mathew who made it a smooth journey!',
+  },
+  {
+    name: 'Omar Alshareef',
+    quote:
+      'What a great experience, I couldn’t be happier as a customer with Blackline Motors, this my second car that I have consigned with them and they are delightful to deal with. John and the team are professionals, they made selling experience flawless and easy and pretty quick. It’s great to find honest people like Blackline in the used car market.',
+  },
+  {
+    name: 'vishnu sankaran',
+    quote:
+      'I sold my sports car through Blackline, and the overall experience of going through them was pleasant, professional and seamless. My main contact point was Daryl (and later on Rik as well), and I found them to honor their commitments and keep me well informed through every step of the journey. Thank you guys! This was my first time going through a used car dealer, and after my memorable experience with Blackline, I’d highly recommend them to anyone wishing to sell or buy used cars. Keep up the professionalism and good work guys!',
+  },
+  {
+    name: 'Ibrahim El-shehawi',
+    quote:
+      'It was definitely the best experience I have had in selling my car. Daryl contacted me to take care of the sale, followed up with me on every step his team was taking whether by calls or texts and was very transparent throughout the entire process. This is a big thank you to Daryl, Dan, Rik and John for getting the sale and ownership transfer in almost no time without the need to worry about anything and, a big thank you for the level of professionalism I have experienced in this.',
+  },
+];
+---
+<Layout title="Vehicle Consignment in Dubai | Blackline Motor Company"
+  description="Consign your premium car with Blackline Motor Company in Dubai. Professional marketing, peace of mind, protection for buyer and seller — and no fees for the seller.">
+
+  <!-- Hero -->
+  <section class="bg-ink pt-[calc(var(--nav-h)+2rem)]">
+    <div class="lux-wide pb-16 lg:pb-24">
+      <div class="max-w-3xl">
+        <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>Vehicle Consignment</p>
+        <h1 class="mt-5 display-1 text-ivory">Let us sell it for you</h1>
+        <p class="mt-7 max-w-2xl text-[1.05rem] leading-relaxed text-mist">
+          Let us invite you to our luxury showroom for a coffee and a chat with our team, if your car
+          meets our high standards, we will work together to create a consignment agreement. We’ll be
+          able to show you what will happen to your car while it is under our care, how often you will
+          be updated on the sales enquiries and progress of the car.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why consign with Blackline -->
+  <section class="border-t border-ivory/[0.06] bg-coal py-20 lg:py-28">
+    <div class="lux-wide">
+      <div class="mb-12 max-w-2xl">
+        <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>Why consign with Blackline</p>
+        <h2 class="mt-5 display-2 text-ivory">Why consign your car with Blackline Motor Company?</h2>
+      </div>
+      <div class="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-ivory/[0.08] bg-ivory/[0.08] md:grid-cols-2">
+        {benefits.map((b) => (
+          <div class="flex flex-col gap-4 bg-graphite p-7 lg:p-9" data-reveal>
+            <span class="grid h-12 w-12 place-items-center rounded-full border border-gold/30 text-gold"><b.icon class="h-5 w-5" /></span>
+            <h3 class="font-display text-xl font-semibold text-ivory">{b.title}</h3>
+            <p class="text-[0.95rem] leading-relaxed text-mist">{b.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="border-t border-ivory/[0.06] py-20 lg:py-28">
+    <div class="lux-wide">
+      <div class="mb-12 max-w-2xl">
+        <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>Consignment customers</p>
+        <h2 class="mt-5 display-3 text-ivory">What our consignment customers have to say about using our service</h2>
+      </div>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {testimonials.map((t) => (
+          <figure class="card flex flex-col gap-5 p-7 lg:p-8" data-reveal>
+            <span class="inline-flex items-center gap-1 text-gold">
+              {Array.from({ length: 5 }).map(() => <Star class="h-4 w-4 fill-current" />)}
+            </span>
+            <blockquote class="text-[1rem] leading-relaxed text-mist">“{t.quote}”</blockquote>
+            <figcaption class="mt-auto font-display text-base font-semibold text-ivory">{t.name}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="border-t border-ivory/[0.06] bg-coal py-20 lg:py-28">
+    <div class="lux-narrow text-center">
+      <p class="eyebrow justify-center"><span class="h-px w-7 bg-gold/70"></span>Ready to consign</p>
+      <h2 class="mt-5 display-2 text-ivory">Start your valuation</h2>
+      <p class="mt-6 text-[1.05rem] leading-relaxed text-mist">
+        Submit your vehicle details below and one of our consignment specialists will contact you to
+        arrange a valuation.
+      </p>
+      <div class="mt-9 flex flex-wrap justify-center gap-3">
+        <a href="/sell-your-car" class="btn-gold">Start your valuation <ArrowRight class="h-4 w-4" /></a>
+        <a href={contact.whatsapp} target="_blank" rel="noopener" class="btn-outline"><MessageCircle class="h-4 w-4" /> WhatsApp us</a>
+      </div>
+    </div>
+  </section>
+</Layout>

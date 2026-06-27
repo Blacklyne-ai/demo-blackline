@@ -1,0 +1,169 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import SellWizard from '../components/SellWizard.astro';
+import WhyChooseUs from '../components/WhyChooseUs.astro';
+import BrandGrid from '../components/BrandGrid.astro';
+import CarCard from '../components/CarCard.astro';
+import { getCars } from '../lib/cars';
+import { site, contact, services } from '../data/site';
+import { Car, Tag, Handshake, Repeat, Landmark, ArrowRight, MapPin, Phone, MessageCircle, Mail, Star } from '@lucide/astro';
+
+const cars = await getCars();
+const flagship = cars[0];
+const highlights = cars.slice(1, 7); // 6 real cars for the home grid
+const serviceIcons: Record<string, any> = { Car, Tag, Handshake, Repeat, Landmark };
+---
+<Layout>
+  <Hero car={flagship} />
+
+  <!-- ── SELL YOUR PREMIUM CAR (the focus) ───────────────────────────── -->
+  <section id="sell" class="relative scroll-mt-24 border-t border-ivory/[0.06] bg-coal py-20 lg:py-28">
+    <div class="lux-wide grid items-start gap-12 lg:grid-cols-[1fr_0.92fr] lg:gap-16">
+      <div class="lg:sticky lg:top-28">
+        <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>Sell with Blackline</p>
+        <h2 class="mt-5 display-2 text-ivory">Sell your premium car</h2>
+        <p class="mt-6 max-w-md text-[1.02rem] leading-relaxed text-mist">
+          Tell us about your car and one of our specialists will come back with a free, no-obligation
+          valuation. Two quick steps — no listings, no time-wasters, no fees.
+        </p>
+        <div class="mt-8">
+          <WhyChooseUs />
+        </div>
+      </div>
+      <div data-reveal>
+        <SellWizard id="home" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BRANDS WE BUY ──────────────────────────────────────────────── -->
+  <section class="border-t border-ivory/[0.06] py-20 lg:py-28">
+    <div class="lux-wide">
+      <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>Brands we buy</p>
+          <h2 class="mt-5 display-3 text-ivory">From everyday premium to the truly rare</h2>
+        </div>
+        <a href="/sell-your-car" class="link-arrow">Sell your car <ArrowRight class="h-4 w-4" /></a>
+      </div>
+      <BrandGrid />
+    </div>
+  </section>
+
+  <!-- ── BUY / OUR STOCK (highlights) ──────────────────────────────── -->
+  <section class="border-t border-ivory/[0.06] bg-coal py-20 lg:py-28">
+    <div class="lux-wide">
+      <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>In the showroom</p>
+          <h2 class="mt-5 display-2 text-ivory">The latest in our stock</h2>
+        </div>
+        <a href="/our-cars" class="link-arrow">View all cars <ArrowRight class="h-4 w-4" /></a>
+      </div>
+      <!-- MOBILE: one car per row -->
+      <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+        {highlights.map((c, i) => <CarCard car={c} eager={i < 3} />)}
+      </div>
+      <div class="mt-12 flex justify-center lg:hidden">
+        <a href="/our-cars" class="btn-outline">View all cars</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SERVICES WE OFFER ─────────────────────────────────────────── -->
+  <section class="border-t border-ivory/[0.06] py-20 lg:py-28">
+    <div class="lux-wide">
+      <div class="mb-12 max-w-2xl">
+        <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>Services we offer</p>
+        <h2 class="mt-5 display-3 text-ivory">A one-stop shop for your next car</h2>
+        <p class="mt-5 text-[1.02rem] leading-relaxed text-mist">At Blackline Motor Company we offer our customers a “one stop shop” solution to purchasing their new car.</p>
+      </div>
+      <div class="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-ivory/[0.08] bg-ivory/[0.08] md:grid-cols-2 lg:grid-cols-3">
+        {services.map((s) => {
+          const Icon = serviceIcons[s.icon];
+          return (
+            <div class="flex flex-col gap-3 bg-graphite p-7">
+              <span class="grid h-11 w-11 place-items-center rounded-full border border-ivory/15 text-gold"><Icon class="h-5 w-5" /></span>
+              <h3 class="mt-1 font-display text-lg font-semibold text-ivory">{s.title}</h3>
+              <p class="text-[0.92rem] leading-relaxed text-mist">{s.body}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONSIGNMENT TEASER ────────────────────────────────────────── -->
+  <section class="border-t border-ivory/[0.06] bg-coal py-20 lg:py-28">
+    <div class="lux-wide grid items-center gap-10 lg:grid-cols-[1.1fr_1fr]">
+      <div data-reveal>
+        <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>Vehicle Consignment</p>
+        <h2 class="mt-5 display-2 text-ivory">Let us sell it for you</h2>
+        <p class="mt-6 max-w-lg text-[1.02rem] leading-relaxed text-mist">
+          Let us invite you to our luxury showroom for a coffee and a chat with our team, if your car
+          meets our high standards, we will work together to create a consignment agreement.
+        </p>
+        <p class="mt-4 max-w-lg text-[0.95rem] leading-relaxed text-faint">
+          Professional marketing, security and convenience, protection for buyer and seller — and as a
+          seller, simply no fees to pay.
+        </p>
+        <a href="/consignment" class="link-arrow mt-8">Find out more <ArrowRight class="h-4 w-4" /></a>
+      </div>
+      <div class="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-ivory/[0.08] bg-ivory/[0.08]" data-reveal>
+        {[['No fees', 'for the seller'], ['Pro photography', 'in-house studio'], ['Dubizzle & Dubicars', 'plus our own channels'], ['RTA transfer', 'handled for you']].map(([a, b]) => (
+          <div class="bg-graphite p-6">
+            <p class="font-display text-lg font-semibold text-ivory">{a}</p>
+            <p class="mt-1 text-sm text-mist">{b}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT + REVIEWS ───────────────────────────────────────────── -->
+  <section class="border-t border-ivory/[0.06] py-20 lg:py-28">
+    <div class="lux-narrow text-center">
+      <span class="inline-flex items-center gap-2 text-gold">
+        {Array.from({ length: 5 }).map(() => <Star class="h-4 w-4 fill-current" />)}
+      </span>
+      <p class="mt-4 text-[0.8rem] uppercase tracking-[0.2em] text-faint">{contact.reviewCount}+ reviews on Google · rated 5/5</p>
+      <h2 class="mt-6 display-3 text-ivory">What really makes us different</h2>
+      <p class="mt-6 text-[1.05rem] leading-relaxed text-mist">
+        We are not interested in acquiring ‘cheap’ cars, we will only select the very best cars for our
+        customers. Blackline will never sell you a car — we will only help you to buy one.
+      </p>
+      <div class="mt-9 flex flex-wrap justify-center gap-3">
+        <a href="/about-us" class="btn-outline">About Blackline</a>
+        <a href={contact.reviewLink} target="_blank" rel="noopener" class="btn-ghost">Read our reviews →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT / LET'S TALK ──────────────────────────────────────── -->
+  <section class="border-t border-ivory/[0.06] bg-coal py-20 lg:py-28">
+    <div class="lux-wide grid gap-10 lg:grid-cols-[1fr_1.1fr]">
+      <div>
+        <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>Visit our showroom</p>
+        <h2 class="mt-5 display-2 text-ivory">Let’s talk</h2>
+        <p class="mt-6 max-w-md text-[1.02rem] leading-relaxed text-mist">
+          Come for a coffee and a look around. Get in touch to explore our current selection, or if you
+          would like help sourcing a particular example.
+        </p>
+        <ul class="mt-8 space-y-4 text-[0.95rem] text-ivory/80">
+          <li class="flex gap-3"><MapPin class="mt-0.5 h-5 w-5 shrink-0 text-gold" /><span>{contact.addressLine1}<br />{contact.addressLine2}</span></li>
+          <li class="flex gap-3"><Phone class="mt-0.5 h-5 w-5 shrink-0 text-gold" /><span><a href={contact.phonePrimaryHref} class="hover:text-gold">{contact.phonePrimary}</a> · <a href={contact.phoneSecondaryHref} class="hover:text-gold">{contact.phoneSecondary}</a></span></li>
+          <li class="flex gap-3"><Mail class="mt-0.5 h-5 w-5 shrink-0 text-gold" /><a href={contact.emailHref} class="hover:text-gold">{contact.email}</a></li>
+        </ul>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href={contact.whatsapp} target="_blank" rel="noopener" class="btn-gold"><MessageCircle class="h-4 w-4" /> WhatsApp us</a>
+          <a href="/contact-us" class="btn-outline">Contact us</a>
+        </div>
+      </div>
+      <div class="overflow-hidden rounded-2xl border border-ivory/[0.08]">
+        <iframe title="Blackline Motor Company on the map" src={contact.mapEmbed} loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade" class="h-full min-h-[340px] w-full" style="filter:grayscale(0.3) invert(0.92) hue-rotate(180deg) contrast(0.9)"></iframe>
+      </div>
+    </div>
+  </section>
+</Layout>

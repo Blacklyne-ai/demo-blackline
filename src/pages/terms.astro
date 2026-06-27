@@ -1,0 +1,132 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { contact } from '../data/site';
+import { Info, MessageCircle, Phone, ArrowRight } from '@lucide/astro';
+
+const intro =
+  'These standard terms set out how we buy, sell and consign vehicles at Blackline Motor Company. They are kept deliberately plain — the specifics of any individual purchase, sale or consignment are confirmed in writing on the relevant agreement.';
+
+const sections = [
+  {
+    n: '01',
+    title: 'Buying a car from us',
+    items: [
+      'Every car we sell is hand-selected, inspected and professionally detailed before it is advertised.',
+      'Prices are shown in AED. Availability is confirmed at the point of sale; a vehicle is only reserved once a deposit or agreement is in place.',
+      'We work with the leading UAE banks and insurers to arrange finance and insurance where required.',
+      'Comprehensive warranty and service contract packages are available on eligible vehicles.',
+    ],
+  },
+  {
+    n: '02',
+    title: 'Selling your car to us',
+    items: [
+      'Valuations are free and carry no obligation. A valuation reflects current market conditions and may change over time.',
+      'A physical inspection of the vehicle is required before any offer is finalised.',
+      'On acceptance we handle payment and the RTA ownership transfer for you.',
+      'You are responsible for disclosing any outstanding finance, accident history or material defects.',
+    ],
+  },
+  {
+    n: '03',
+    title: 'Consignment',
+    items: [
+      'Under a consignment agreement your car is marketed and sold on your behalf from our showroom.',
+      'As a seller there are simply no fees for you to pay.',
+      'We agree an accurate valuation with you in advance and keep you updated on enquiries and progress.',
+      'We manage the full payment process and the RTA ownership transfer on completion.',
+    ],
+  },
+  {
+    n: '04',
+    title: 'Part exchange & trade-in',
+    items: [
+      'We accept part exchange and trade-ins against any car in our showroom.',
+      'The part-exchange figure is confirmed after inspection and forms part of the overall agreement.',
+    ],
+  },
+  {
+    n: '05',
+    title: 'General',
+    items: [
+      'Vehicle descriptions, images and specifications are provided in good faith and should be confirmed in person.',
+      'Nothing on this website constitutes a binding offer; agreements are made in writing per transaction.',
+      'These terms are governed by the laws of the United Arab Emirates.',
+    ],
+  },
+];
+---
+<Layout title="Terms & Conditions — Blackline Motor Company"
+  description="Standard terms for buying, selling and consigning cars with Blackline Motor Company, Dubai.">
+
+  <!-- Hero -->
+  <section class="bg-ink pt-[calc(var(--nav-h)+2rem)]">
+    <div class="lux-narrow pb-12 lg:pb-16">
+      <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>Standard terms & conditions</p>
+      <h1 class="mt-5 display-1 text-ivory">Our terms</h1>
+      <p class="mt-7 text-[1.05rem] leading-relaxed text-mist">{intro}</p>
+    </div>
+  </section>
+
+  <!-- Sections + sticky index -->
+  <section class="border-t border-ivory/[0.06] bg-coal py-16 lg:py-24">
+    <div class="lux-wide">
+      <div class="grid gap-12 lg:grid-cols-[260px_1fr] lg:gap-16">
+        <nav class="top-[calc(var(--nav-h)+1.5rem)] h-max lg:sticky" aria-label="Sections" data-reveal>
+          <p class="eyebrow mb-5"><span class="h-px w-7 bg-gold/70"></span>Contents</p>
+          <ol class="space-y-1">
+            {sections.map((s) => (
+              <li>
+                <a href={`#sec-${s.n}`} class="flex gap-3 rounded-lg px-3 py-2 text-sm text-mist transition-colors hover:bg-ivory/5 hover:text-gold-deep">
+                  <span class="font-display text-base leading-none text-gold-deep/55">{s.n}</span> {s.title}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+
+        <div class="max-w-3xl space-y-14">
+          {sections.map((s) => (
+            <section id={`sec-${s.n}`} class="scroll-mt-[calc(var(--nav-h)+1.5rem)] border-b border-ivory/10 pb-14 last:border-0 last:pb-0" data-reveal>
+              <div class="flex items-baseline gap-4">
+                <span class="font-display text-3xl leading-none text-gold-deep/45">{s.n}</span>
+                <h2 class="font-display text-[clamp(1.6rem,3vw,2.2rem)] font-normal leading-tight text-ivory">{s.title}</h2>
+              </div>
+              <ul class="mt-7 space-y-4">
+                {s.items.map((it) => (
+                  <li class="flex gap-3.5 text-[0.98rem] leading-relaxed text-mist">
+                    <span class="mt-[0.7em] h-1.5 w-1.5 shrink-0 rounded-full bg-gold-deep/45"></span>{it}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+
+          <div class="rounded-2xl border border-gold/25 bg-gold/[0.06] p-6 lg:p-7" data-reveal>
+            <div class="flex gap-3.5">
+              <Info class="h-5 w-5 shrink-0 text-gold-deep" stroke-width={1.6} />
+              <p class="text-[0.95rem] leading-relaxed text-mist">
+                The exact price, finance terms, warranty and part-exchange figures are confirmed per vehicle on the relevant agreement. For any question on the terms, message us on
+                <a href={contact.whatsapp} target="_blank" rel="noopener" class="text-gold-deep underline underline-offset-2 hover:text-gold">WhatsApp</a> or call
+                <a href={contact.phonePrimaryHref} class="text-gold-deep underline underline-offset-2 hover:text-gold">{contact.phonePrimary}</a>.
+              </p>
+            </div>
+          </div>
+          <p class="text-sm text-faint" data-reveal>Operator-TODO: have these terms reviewed against UAE consumer-protection and trade-licence requirements before going live.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Questions? -->
+  <section class="border-t border-ivory/[0.06] py-16 lg:py-20" data-reveal>
+    <div class="lux-narrow flex flex-col items-center text-center">
+      <p class="eyebrow mb-4"><span class="h-px w-7 bg-gold/70"></span>Still have a question?</p>
+      <h2 class="max-w-2xl font-display text-[clamp(1.7rem,3vw,2.4rem)] font-normal leading-tight text-ivory">Talk to us — we keep it simple.</h2>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <a href={contact.whatsapp} target="_blank" rel="noopener" class="btn-gold"><MessageCircle class="h-4 w-4" /> WhatsApp us</a>
+        <a href="/our-cars" class="btn-outline">View our cars <ArrowRight class="h-4 w-4" /></a>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,83 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCars } from '../lib/cars';
+import { contact } from '../data/site';
+import { Star, ArrowRight, Quote } from '@lucide/astro';
+
+const cars = await getCars();
+// A representative visual selection from the current showroom — framed honestly as
+// "the calibre of cars we handle", NOT claimed as specific past sales. The live
+// previously-sold feed is an Operator-TODO (see JUDGEMENT_CALLS.md).
+const wall = cars.slice(0, 8);
+const testimonials = [
+  { name: 'Omar Alshareef', text: 'What a great experience, I couldn’t be happier as a customer with Blackline Motors, this is my second car that I have consigned with them and they are delightful to deal with. John and the team are professionals — they made the selling experience flawless, easy and pretty quick.' },
+  { name: 'vishnu sankaran', text: 'I sold my sports car through Blackline, and the overall experience was pleasant, professional and seamless. I found them to honour their commitments and keep me well informed through every step of the journey.' },
+];
+---
+<Layout title="Previously Sold Vehicles | Blackline Motor Company"
+  description="A look at the calibre of premium cars handled by Blackline Motor Company in Dubai — and what our customers say about selling and buying with us.">
+
+  <header class="bg-ink pt-[calc(var(--nav-h)+2rem)]">
+    <div class="lux-wide pb-10">
+      <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>Track record</p>
+      <h1 class="mt-5 display-1 text-ivory">Our previously sold cars</h1>
+      <p class="mt-5 max-w-xl text-[1.02rem] leading-relaxed text-mist">
+        Our showroom turns over constantly. Here is a glimpse of the calibre of vehicles that pass
+        through Blackline — and what owners say about selling and buying with us.
+      </p>
+      <div class="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
+        <span class="inline-flex items-center gap-1 text-gold">{Array.from({ length: 5 }).map(() => <Star class="h-4 w-4 fill-current" />)}</span>
+        <span class="text-[0.8rem] uppercase tracking-[0.18em] text-faint">{contact.reviewCount}+ reviews on Google · rated 5/5</span>
+        <a href={contact.reviewLink} target="_blank" rel="noopener" class="link-arrow text-[0.7rem]">Read the reviews <ArrowRight class="h-4 w-4" /></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Gallery wall — MOBILE: one per row -->
+  <section class="border-t border-ivory/[0.06] py-12 lg:py-16">
+    <div class="lux-wide grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {wall.map((c) => (
+        <a href={`/our-cars/${c.slug}`} class="group relative overflow-hidden rounded-xl border border-ivory/[0.08] bg-coal">
+          <img src={c.images[0]} alt={`${c.year} ${c.make} ${c.model}`} width="640" height="480" loading="lazy" decoding="async"
+            class="aspect-[4/3] w-full object-cover opacity-[0.62] grayscale-[0.3] transition-all duration-500 group-hover:opacity-90 group-hover:grayscale-0" />
+          <span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/90 to-transparent p-4 text-sm font-medium text-ivory">{c.make} {c.model}</span>
+        </a>
+      ))}
+    </div>
+    <p class="lux-wide mt-6 text-xs text-faint">A selection of current showroom stock shown for illustration. <a href="/our-cars" class="text-gold/80 underline underline-offset-2 hover:text-gold">See what’s available now →</a></p>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="border-t border-ivory/[0.06] bg-coal py-20 lg:py-28">
+    <div class="lux-wide">
+      <div class="mb-12 max-w-2xl">
+        <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>In their words</p>
+        <h2 class="mt-5 display-2 text-ivory">Trusted by sellers and buyers</h2>
+      </div>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {testimonials.map((t) => (
+          <figure class="card flex flex-col p-8">
+            <Quote class="h-7 w-7 text-gold/40" />
+            <blockquote class="mt-4 text-[1.0rem] leading-relaxed text-ivory/85">{t.text}</blockquote>
+            <figcaption class="mt-5 flex items-center gap-3 border-t border-ivory/[0.08] pt-5">
+              <span class="inline-flex text-gold">{Array.from({ length: 5 }).map(() => <Star class="h-3.5 w-3.5 fill-current" />)}</span>
+              <span class="text-sm font-medium text-ivory">{t.name}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="border-t border-ivory/[0.06] py-20 lg:py-28">
+    <div class="lux-narrow text-center">
+      <h2 class="display-3 text-ivory">Your car could be next</h2>
+      <p class="mt-5 text-[1.05rem] leading-relaxed text-mist">Top prices, no fees, instant payment. Get a free, no-obligation valuation today.</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a href="/sell-your-car" class="btn-gold">Get my valuation</a>
+        <a href="/our-cars" class="btn-outline">Browse our cars</a>
+      </div>
+    </div>
+  </section>
+</Layout>

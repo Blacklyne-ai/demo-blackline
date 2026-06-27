@@ -1,0 +1,61 @@
+---
+// ── Blackline hero — split: black headline panel + a framed flagship from
+// the real inventory. The studio photos are shot on a light seamless backdrop,
+// so we frame them against the deep-black page (the literal Blackline duality)
+// rather than forcing a muddy dark overlay. Static (no rented film). LCP = the
+// flagship image. Headline text is plain (no fade) for CLS/LCP safety.
+import { ChevronDown, Phone } from '@lucide/astro';
+import { site, contact } from '../data/site';
+import { fmtAED, carTitle } from '../lib/cars';
+import type { Car } from '../lib/cars';
+
+interface Props { car: Car }
+const { car } = Astro.props;
+const cover = car.images[0];
+const title = carTitle(car);
+---
+<section class="relative overflow-hidden bg-ink pt-[var(--nav-h)]">
+  <div class="lux-wide grid items-center gap-8 pb-12 pt-6 lg:grid-cols-[0.92fr_1.08fr] lg:gap-10 lg:pb-20 lg:pt-12">
+    <!-- Headline panel -->
+    <div class="relative order-2 lg:order-1">
+      <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>{site.city} · Premium Pre-Owned</p>
+      <h1 class="mt-5 display-1 text-ivory">
+        Sell your premium car.<br /><span class="text-mist">Buy your next one.</span>
+      </h1>
+      <p class="mt-6 max-w-md text-[1.02rem] leading-relaxed text-mist">
+        Dubai’s boutique dealer for high-spec luxury and performance cars. Top prices, no fees,
+        instant payment — and a curated showroom of vehicles worth owning.
+      </p>
+      <div class="mt-8 flex flex-wrap items-center gap-3">
+        <a href="/sell-your-car" class="btn-gold h-[54px] px-7 text-[0.82rem] uppercase tracking-[0.13em]">Get my valuation</a>
+        <a href="/our-cars" class="btn-outline h-[54px] px-7 text-[0.82rem] uppercase tracking-[0.13em]">Browse our cars</a>
+      </div>
+      <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-[0.78rem] text-faint">
+        <a href={contact.phonePrimaryHref} class="inline-flex items-center gap-2 transition-colors hover:text-gold"><Phone class="h-4 w-4" /> {contact.phonePrimary}</a>
+        <span class="hidden h-3 w-px bg-ivory/15 sm:inline-block"></span>
+        <span>{contact.reviewCount}+ five-star reviews · Ras Al Khor</span>
+      </div>
+    </div>
+
+    <!-- Framed flagship -->
+    <div class="relative order-1 lg:order-2" data-reveal>
+      <div class="relative overflow-hidden rounded-2xl border border-ivory/10 bg-coal shadow-[0_40px_120px_-40px_rgba(0,0,0,0.9)]">
+        <img src={cover} alt={title} width="1280" height="853" fetchpriority="high" decoding="async"
+          class="aspect-[3/2] w-full object-cover" />
+        <span class="bl-line pointer-events-none absolute inset-x-0 -top-1 h-24 opacity-50" aria-hidden="true"></span>
+      </div>
+      <!-- floating spec tag -->
+      <a href={`/our-cars/${car.slug}`} class="group absolute bottom-4 left-4 inline-flex items-center gap-3 rounded-xl border border-ivory/10 bg-ink/80 px-4 py-3 backdrop-blur-md transition-colors hover:border-gold/40">
+        <span class="block">
+          <span class="block text-[0.7rem] uppercase tracking-[0.14em] text-faint">In the showroom</span>
+          <span class="block text-sm font-semibold text-ivory">{title}</span>
+        </span>
+        <span class="price-aed whitespace-nowrap border-l border-ivory/15 pl-3 text-sm font-semibold text-gold">{fmtAED(car.priceAED)}</span>
+      </a>
+    </div>
+  </div>
+
+  <a href="#sell" class="lux-wide relative z-10 hidden pb-7 lg:flex" aria-label="Scroll down">
+    <span class="inline-flex items-center gap-2 text-[0.7rem] uppercase tracking-[0.2em] text-faint"><ChevronDown class="h-4 w-4 motion-safe:animate-scrollcue" /> Sell · Buy · Consign</span>
+  </a>
+</section>

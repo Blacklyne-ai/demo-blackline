@@ -1,0 +1,18 @@
+---
+// "Why choose us" — the 4 points, verbatim from /sell-your-car. Calm, symmetric.
+// MOBILE: one per row.
+import { BadgeCheck, HandCoins, Banknote, ListChecks } from '@lucide/astro';
+import { whyChooseUs } from '../data/site';
+const icons: Record<string, any> = { BadgeCheck, HandCoins, Banknote, ListChecks };
+---
+<div class="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-ivory/[0.08] bg-ivory/[0.08] sm:grid-cols-2 lg:grid-cols-4">
+  {whyChooseUs.map((w, i) => {
+    const Icon = icons[w.icon];
+    return (
+      <div class="flex flex-col gap-4 bg-graphite p-7" data-reveal data-delay={i * 70}>
+        <span class="grid h-11 w-11 place-items-center rounded-full border border-gold/30 text-gold"><Icon class="h-5 w-5" /></span>
+        <p class="text-[1.02rem] font-medium leading-snug text-ivory">{w.text}</p>
+      </div>
+    );
+  })}
+</div>

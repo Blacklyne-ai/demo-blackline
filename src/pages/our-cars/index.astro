@@ -1,0 +1,165 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CarCard from '../../components/CarCard.astro';
+import { getCars, activeMakes, bodyTypes } from '../../lib/cars';
+import { Search, SlidersHorizontal, X } from '@lucide/astro';
+
+const cars = await getCars();
+const makes = activeMakes(cars);
+const bodies = bodyTypes(cars);
+const specsSet = [...new Set(cars.map((c) => c.specs).filter(Boolean))];
+const priceBands = [
+  { v: '', label: 'Any price' },
+  { v: '0-250000', label: 'Under AED 250k' },
+  { v: '250000-500000', label: 'AED 250k – 500k' },
+  { v: '500000-1000000', label: 'AED 500k – 1M' },
+  { v: '1000000-99000000', label: 'AED 1M+' },
+];
+---
+<Layout title="Our Cars — Premium Pre-Owned Stock in Dubai | Blackline Motor Company"
+  description="Browse Blackline Motor Company’s curated stock of premium pre-owned cars in Dubai. Filter by make, body type, price and specs. Real AED prices, GCC specs.">
+  <!-- header -->
+  <header class="bg-ink pt-[calc(var(--nav-h)+2rem)]">
+    <div class="lux-wide pb-10">
+      <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>The showroom</p>
+      <h1 class="mt-5 display-1 text-ivory">Our cars</h1>
+      <p class="mt-5 max-w-xl text-[1.02rem] leading-relaxed text-mist">
+        {cars.length} handpicked premium vehicles, fully inspected and detailed. Every price in AED,
+        every spec real. Save the ones you like — they’ll be waiting in your shortlist.
+      </p>
+    </div>
+  </header>
+
+  <!-- Filter toolbar -->
+  <div class="sticky top-[var(--nav-h)] z-40 border-y border-ivory/[0.08] bg-ink/92 backdrop-blur-xl">
+    <div class="lux-wide py-4">
+      <!-- body-type pills -->
+      <div class="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <button data-body-pill data-body="" class="cat-pill is-on">All <span class="opacity-60">{cars.length}</span></button>
+        {bodies.map((b) => (
+          <button data-body-pill data-body={b} class="cat-pill">{b} <span class="opacity-60">{cars.filter((c) => c.bodyType === b).length}</span></button>
+        ))}
+      </div>
+      <!-- controls -->
+      <div class="mt-3 flex flex-wrap items-center gap-2.5">
+        <label class="relative min-w-[180px] flex-1">
+          <Search class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
+          <input data-search type="search" placeholder="Search make or model…" class="w-full rounded-pill border border-ivory/12 bg-graphite py-2.5 pl-10 pr-4 text-sm text-ivory placeholder:text-faint focus:border-gold/50 focus:outline-none" />
+        </label>
+        <select data-make-filter class="rounded-pill border border-ivory/12 bg-graphite px-4 py-2.5 text-sm text-ivory focus:border-gold/50 focus:outline-none">
+          <option value="">All makes</option>
+          {makes.map((m) => <option value={m}>{m}</option>)}
+        </select>
+        <select data-price-filter class="rounded-pill border border-ivory/12 bg-graphite px-4 py-2.5 text-sm text-ivory focus:border-gold/50 focus:outline-none">
+          {priceBands.map((p) => <option value={p.v}>{p.label}</option>)}
+        </select>
+        <select data-specs-filter class="rounded-pill border border-ivory/12 bg-graphite px-4 py-2.5 text-sm text-ivory focus:border-gold/50 focus:outline-none">
+          <option value="">Any specs</option>
+          {specsSet.map((s) => <option value={s}>{s}</option>)}
+        </select>
+        <select data-sort class="rounded-pill border border-ivory/12 bg-graphite px-4 py-2.5 text-sm text-ivory focus:border-gold/50 focus:outline-none">
+          <option value="price-desc">Price: high to low</option>
+          <option value="price-asc">Price: low to high</option>
+          <option value="year-desc">Year: newest</option>
+          <option value="km-asc">Mileage: lowest</option>
+        </select>
+        <button data-reset class="hidden items-center gap-1.5 rounded-pill border border-ivory/12 px-4 py-2.5 text-sm text-mist hover:text-gold"><X class="h-3.5 w-3.5" /> Reset</button>
+        <span class="ml-auto text-sm text-mist"><span data-count>{cars.length}</span> cars</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid — MOBILE: one car per row -->
+  <section class="lux-wide py-12 lg:py-16">
+    <div data-grid class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+      {cars.map((car, i) => <CarCard car={car} eager={i < 6} />)}
+    </div>
+    <div data-empty class="hidden py-24 text-center">
+      <SlidersHorizontal class="mx-auto h-10 w-10 text-faint" />
+      <p class="mt-4 text-lg text-ivory">No cars match these filters.</p>
+      <button data-reset class="btn-outline mt-5">Clear filters</button>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .cat-pill { @apply shrink-0 whitespace-nowrap rounded-pill border border-ivory/12 px-4 py-2 text-sm font-medium text-mist transition-colors; }
+  .cat-pill.is-on { @apply border-gold/60 bg-gold/10 text-gold; }
+  .cat-pill:hover { @apply text-ivory; }
+</style>
+
+<script>
+  const grid = document.querySelector('[data-grid]') as HTMLElement;
+  const cards = Array.from(document.querySelectorAll('[data-card]')) as HTMLElement[];
+  const pills = Array.from(document.querySelectorAll('[data-body-pill]')) as HTMLElement[];
+  const search = document.querySelector('[data-search]') as HTMLInputElement;
+  const makeSel = document.querySelector('[data-make-filter]') as HTMLSelectElement;
+  const priceSel = document.querySelector('[data-price-filter]') as HTMLSelectElement;
+  const specsSel = document.querySelector('[data-specs-filter]') as HTMLSelectElement;
+  const sortSel = document.querySelector('[data-sort]') as HTMLSelectElement;
+  const countEl = document.querySelector('[data-count]') as HTMLElement;
+  const emptyEl = document.querySelector('[data-empty]') as HTMLElement;
+  const resetEls = Array.from(document.querySelectorAll('[data-reset]')) as HTMLElement[];
+
+  const state = { body: '', make: '', price: '', specs: '', q: '', sort: 'price-desc' };
+  const params = new URLSearchParams(location.search);
+  if (params.get('body')) state.body = params.get('body')!;
+  if (params.get('make')) state.make = params.get('make')!;
+
+  function syncControls() {
+    pills.forEach((p) => p.classList.toggle('is-on', (p.dataset.body || '') === state.body));
+    makeSel.value = state.make;
+    priceSel.value = state.price;
+    specsSel.value = state.specs;
+    sortSel.value = state.sort;
+    search.value = state.q;
+    const active = state.body || state.make || state.price || state.specs || state.q;
+    resetEls.forEach((r) => r.classList.toggle('hidden', !active));
+  }
+
+  function apply() {
+    let shown = 0;
+    const [pmin, pmax] = state.price ? state.price.split('-').map(Number) : [0, Infinity];
+    const q = state.q.toLowerCase();
+    cards.forEach((c) => {
+      const price = Number(c.dataset.price || 0);
+      const ok =
+        (!state.body || c.dataset.body === state.body) &&
+        (!state.make || c.dataset.make === state.make) &&
+        (!state.specs || c.dataset.specs === state.specs) &&
+        (!state.price || (price >= pmin && price <= pmax)) &&
+        (!q || (c.dataset.name || '').includes(q));
+      c.style.display = ok ? '' : 'none';
+      if (ok) shown++;
+    });
+    countEl.textContent = String(shown);
+    emptyEl.classList.toggle('hidden', shown > 0);
+    grid.classList.toggle('hidden', shown === 0);
+
+    const visible = cards.filter((c) => c.style.display !== 'none');
+    visible.sort((a, b) => {
+      const pa = Number(a.dataset.price), pb = Number(b.dataset.price);
+      if (state.sort === 'price-asc') return pa - pb;
+      if (state.sort === 'year-desc') return Number(b.dataset.year) - Number(a.dataset.year);
+      if (state.sort === 'km-asc') return Number(a.dataset.km) - Number(b.dataset.km);
+      return pb - pa;
+    });
+    visible.forEach((c) => grid.appendChild(c));
+
+    const u = new URLSearchParams();
+    if (state.body) u.set('body', state.body);
+    if (state.make) u.set('make', state.make);
+    history.replaceState(null, '', u.toString() ? `?${u}` : location.pathname);
+    syncControls();
+  }
+
+  pills.forEach((p) => p.addEventListener('click', () => { state.body = p.dataset.body || ''; apply(); }));
+  makeSel.addEventListener('change', () => { state.make = makeSel.value; apply(); });
+  priceSel.addEventListener('change', () => { state.price = priceSel.value; apply(); });
+  specsSel.addEventListener('change', () => { state.specs = specsSel.value; apply(); });
+  sortSel.addEventListener('change', () => { state.sort = sortSel.value; apply(); });
+  let t: any; search.addEventListener('input', () => { clearTimeout(t); t = setTimeout(() => { state.q = search.value; apply(); }, 140); });
+  resetEls.forEach((r) => r.addEventListener('click', () => { state.body = ''; state.make = ''; state.price = ''; state.specs = ''; state.q = ''; apply(); }));
+
+  apply();
+</script>

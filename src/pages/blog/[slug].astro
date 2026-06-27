@@ -1,0 +1,110 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import blog from '../../data/blog.json';
+import { ArrowLeft, ArrowRight } from '@lucide/astro';
+
+export async function getStaticPaths() {
+  return blog.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const fmtDate = (d: string) => new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const sorted = [...blog].sort((a, b) => +new Date(b.date) - +new Date(a.date));
+const more = sorted.filter((p) => p.slug !== post.slug).slice(0, 3);
+
+// ── Clean + paragraph-split the plain-text content ──
+function buildBlocks(raw: string): { type: 'h' | 'p'; text: string }[] {
+  // Strip the repeated page chrome / review wall that trails every post.
+  let body = raw;
+  const cut = body.indexOf('More Blog Posts');
+  if (cut > 0) body = body.slice(0, cut);
+  // The first sentence repeats the title — drop it if so.
+  if (body.startsWith(post.title)) body = body.slice(post.title.length);
+  body = body.replace(/\s+/g, ' ').trim();
+
+  // Split into sentences, then group ~350 chars at sentence boundaries.
+  const sentences = body.match(/[^.!?]+[.!?]+(?:["”’)]+)?|\S[^.!?]*$/g) || [body];
+  const blocks: { type: 'h' | 'p'; text: string }[] = [];
+  let buf = '';
+  for (let s of sentences) {
+    const sent = s.trim();
+    if (!sent) continue;
+    // Treat short ALL-CAPS / numbered-heading-like lines as subheadings.
+    const isHeading =
+      sent.length < 80 &&
+      (/^\d+\.\s/.test(sent) || (sent === sent.toUpperCase() && /[A-Z]/.test(sent)) || /^Conclusion\b/i.test(sent));
+    if (isHeading) {
+      if (buf.trim()) { blocks.push({ type: 'p', text: buf.trim() }); buf = ''; }
+      blocks.push({ type: 'h', text: sent.replace(/[.]$/, '') });
+      continue;
+    }
+    buf += (buf ? ' ' : '') + sent;
+    if (buf.length >= 350) { blocks.push({ type: 'p', text: buf.trim() }); buf = ''; }
+  }
+  if (buf.trim()) blocks.push({ type: 'p', text: buf.trim() });
+  return blocks;
+}
+
+const blocks = buildBlocks(post.content);
+---
+<Layout title={`${post.title} | Blackline Motor Company`} description={post.excerpt ?? post.title}>
+  <article>
+    <!-- Hero -->
+    <section class="bg-ink pt-[calc(var(--nav-h)+2rem)]">
+      <div class="lux-narrow pb-12 lg:pb-16">
+        <a href="/blog" class="link-arrow mb-7"><ArrowLeft class="h-4 w-4" /> Back to blog</a>
+        <p class="mt-2 text-[0.72rem] uppercase tracking-[0.3em] text-faint">{fmtDate(post.date)}</p>
+        <h1 class="mt-5 display-2 text-ivory">{post.title}</h1>
+      </div>
+    </section>
+
+    <!-- Body -->
+    <section class="border-t border-ivory/[0.06] bg-coal py-16 lg:py-24">
+      <div class="lux-narrow">
+        {post.excerpt && (
+          <p class="font-display text-[clamp(1.3rem,2.4vw,1.8rem)] font-normal leading-[1.35] text-ivory" data-reveal>{post.excerpt}</p>
+        )}
+        <div class="mt-8" data-reveal data-delay="60">
+          {blocks.map((b) =>
+            b.type === 'h'
+              ? <h2 class="mt-10 font-display text-xl font-semibold text-ivory">{b.text}</h2>
+              : <p class="mt-5 text-[1.02rem] leading-relaxed text-mist">{b.text}</p>
+          )}
+        </div>
+
+        <!-- Inline CTA -->
+        <div class="mt-14 rounded-2xl border border-ivory/[0.08] bg-graphite p-8 lg:p-10" data-reveal>
+          <p class="font-display text-[1.4rem] font-semibold leading-snug text-ivory">Ready to sell your car in the UAE?</p>
+          <p class="mt-3 max-w-lg text-[0.98rem] leading-relaxed text-mist">Contact us today for a free, no-obligation valuation and let our experienced team guide you through a seamless selling process.</p>
+          <div class="mt-7 flex flex-wrap gap-3">
+            <a href="/sell-your-car" class="btn-gold">Get your free valuation <ArrowRight class="h-4 w-4" /></a>
+            <a href="/consignment" class="btn-outline">Consign your car</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- More from the blog -->
+    <section class="border-t border-ivory/[0.06] py-20 lg:py-28">
+      <div class="lux-wide">
+        <div class="mb-12 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>Keep reading</p>
+            <h2 class="mt-5 display-3 text-ivory">More from the blog</h2>
+          </div>
+          <a href="/blog" class="link-arrow">All posts <ArrowRight class="h-4 w-4" /></a>
+        </div>
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+          {more.map((p, i) => (
+            <a href={`/blog/${p.slug}`} class="card group flex flex-col p-7 transition-colors duration-500 hover:border-gold/40" data-reveal data-delay={(i % 3) * 60}>
+              <p class="text-[0.72rem] uppercase tracking-[0.18em] text-faint">{fmtDate(p.date)}</p>
+              <h3 class="mt-4 font-display text-[1.2rem] font-semibold leading-[1.2] text-ivory transition-colors group-hover:text-gold">{p.title}</h3>
+              <span class="link-arrow mt-6">Read <ArrowRight class="h-4 w-4" /></span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  </article>
+</Layout>

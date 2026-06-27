@@ -1,0 +1,102 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { contact } from '../data/site';
+import { MapPin, Phone, Mail, Clock, MessageCircle, ArrowRight } from '@lucide/astro';
+---
+<Layout title="Contact Blackline Motor Company | Showroom in Ras Al Khor, Dubai"
+  description="Get in touch with Blackline Motor Company in Dubai. Visit our showroom in Ras Al Khor, call, email or message us on WhatsApp to explore our current selection of cars.">
+
+  <!-- Hero -->
+  <section class="bg-ink pt-[calc(var(--nav-h)+2rem)]">
+    <div class="lux-wide pb-16 lg:pb-24">
+      <div class="max-w-3xl">
+        <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>Contact</p>
+        <h1 class="mt-5 display-1 text-ivory">Let’s help you find your perfect car</h1>
+        <p class="mt-7 max-w-2xl text-[1.05rem] leading-relaxed text-mist">
+          Get in touch to explore our current selection of cars with a member of the team, or if you
+          would like help sourcing a particular example.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact + map -->
+  <section class="border-t border-ivory/[0.06] bg-coal py-20 lg:py-28">
+    <div class="lux-wide grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+      <!-- Left: details + tap targets -->
+      <div>
+        <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>Our location</p>
+        <h2 class="mt-5 display-3 text-ivory">Come for a coffee and a look around</h2>
+        <ul class="mt-8 space-y-4 text-[0.95rem] text-ivory/80">
+          <li class="flex gap-3"><MapPin class="mt-0.5 h-5 w-5 shrink-0 text-gold" /><span>{contact.addressLine1}<br />{contact.addressLine2}</span></li>
+          <li class="flex gap-3"><Phone class="mt-0.5 h-5 w-5 shrink-0 text-gold" /><span><a href={contact.phonePrimaryHref} class="hover:text-gold">{contact.phonePrimary}</a> · <a href={contact.phoneSecondaryHref} class="hover:text-gold">{contact.phoneSecondary}</a></span></li>
+          <li class="flex gap-3"><Mail class="mt-0.5 h-5 w-5 shrink-0 text-gold" /><a href={contact.emailHref} class="hover:text-gold">{contact.email}</a></li>
+          <li class="flex gap-3"><Clock class="mt-0.5 h-5 w-5 shrink-0 text-gold" /><span>{contact.hoursNote}</span></li>
+        </ul>
+
+        <!-- Large tap targets (no form) -->
+        <div class="mt-9 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-ivory/[0.08] bg-ivory/[0.08] sm:grid-cols-3">
+          <a href={contact.whatsapp} target="_blank" rel="noopener" class="group flex flex-col gap-3 bg-graphite p-6 transition-colors hover:bg-steel/40">
+            <span class="grid h-11 w-11 place-items-center rounded-full border border-gold/30 text-gold"><MessageCircle class="h-5 w-5" /></span>
+            <p class="font-display text-base font-semibold text-ivory">WhatsApp</p>
+            <p class="text-[0.85rem] text-mist">{contact.whatsappNumber}</p>
+          </a>
+          <a href={contact.phonePrimaryHref} class="group flex flex-col gap-3 bg-graphite p-6 transition-colors hover:bg-steel/40">
+            <span class="grid h-11 w-11 place-items-center rounded-full border border-gold/30 text-gold"><Phone class="h-5 w-5" /></span>
+            <p class="font-display text-base font-semibold text-ivory">Call us</p>
+            <p class="text-[0.85rem] text-mist">{contact.phonePrimary}</p>
+          </a>
+          <a href={contact.emailHref} class="group flex flex-col gap-3 bg-graphite p-6 transition-colors hover:bg-steel/40">
+            <span class="grid h-11 w-11 place-items-center rounded-full border border-gold/30 text-gold"><Mail class="h-5 w-5" /></span>
+            <p class="font-display text-base font-semibold text-ivory">Email</p>
+            <p class="break-all text-[0.85rem] text-mist">{contact.email}</p>
+          </a>
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href={contact.whatsapp} target="_blank" rel="noopener" class="btn-gold"><MessageCircle class="h-4 w-4" /> WhatsApp us</a>
+          <a href={contact.phonePrimaryHref} class="btn-outline"><Phone class="h-4 w-4" /> {contact.phonePrimary}</a>
+        </div>
+      </div>
+
+      <!-- Right: map -->
+      <div class="overflow-hidden rounded-2xl border border-ivory/[0.08]">
+        <iframe title="Blackline Motor Company on the map" src={contact.mapEmbed} loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade" class="h-full min-h-[420px] w-full" style="filter:grayscale(0.3) invert(0.92) hue-rotate(180deg) contrast(0.9)"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Opening hours -->
+  <section class="border-t border-ivory/[0.06] py-20 lg:py-28">
+    <div class="lux-wide grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+      <div data-reveal>
+        <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>Opening hours</p>
+        <h2 class="mt-5 display-3 text-ivory">Open 7 days a week</h2>
+        <p class="mt-5 max-w-md text-[1.02rem] leading-relaxed text-mist">{contact.hoursNote}. Drop by the showroom or get in touch any day of the week.</p>
+      </div>
+      <div class="card overflow-hidden" data-reveal>
+        <ul>
+          {contact.hours.map(([day, time]) => (
+            <li class="flex items-center justify-between border-b border-ivory/[0.06] px-6 py-4 last:border-0">
+              <span class="text-[0.95rem] text-ivory">{day}</span>
+              <span class="text-[0.9rem] text-mist">{time}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="border-t border-ivory/[0.06] bg-coal py-20 lg:py-28">
+    <div class="lux-narrow text-center">
+      <h2 class="display-2 text-ivory">Looking for a particular car?</h2>
+      <p class="mt-6 text-[1.05rem] leading-relaxed text-mist">Browse the showroom or tell us what you are after — we will help you source it.</p>
+      <div class="mt-9 flex flex-wrap justify-center gap-3">
+        <a href="/our-cars" class="btn-gold">View our cars <ArrowRight class="h-4 w-4" /></a>
+        <a href="/sell-your-car" class="btn-outline">Sell your car</a>
+      </div>
+    </div>
+  </section>
+</Layout>

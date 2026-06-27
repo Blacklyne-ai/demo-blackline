@@ -1,0 +1,71 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { about, contact } from '../data/site';
+import { Award, Star, MapPin, BadgeCheck, ArrowRight } from '@lucide/astro';
+
+const stats = [
+  { icon: Award, value: '50+', label: 'years combined experience' },
+  { icon: Star, value: `${contact.reviewCount}+`, label: 'five-star reviews' },
+  { icon: MapPin, value: 'Ras Al Khor', label: 'boutique showroom' },
+  { icon: BadgeCheck, value: 'GCC-spec', label: 'hand-selected stock' },
+];
+---
+<Layout title="About Blackline Motor Company | Premium Cars in Dubai"
+  description="Over 50 years of combined experience in the European premium car market. Blackline Motor Company hand-selects the very best cars for customers in Dubai.">
+
+  <!-- Hero -->
+  <section class="bg-ink pt-[calc(var(--nav-h)+2rem)]">
+    <div class="lux-wide pb-16 lg:pb-24">
+      <div class="max-w-3xl">
+        <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>About Blackline</p>
+        <h1 class="mt-5 display-1 text-ivory">Over 50 years of combined experience</h1>
+        <p class="mt-7 max-w-2xl text-[1.05rem] leading-relaxed text-mist">{about.intro}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust strip -->
+  <section class="border-t border-ivory/[0.06] bg-coal py-14 lg:py-16">
+    <div class="lux-wide">
+      <div class="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-ivory/[0.08] bg-ivory/[0.08] sm:grid-cols-2 lg:grid-cols-4">
+        {stats.map((s) => (
+          <div class="flex flex-col gap-3 bg-graphite p-7">
+            <span class="grid h-11 w-11 place-items-center rounded-full border border-gold/30 text-gold"><s.icon class="h-5 w-5" /></span>
+            <p class="font-display text-2xl font-bold text-ivory">{s.value}</p>
+            <p class="text-[0.9rem] leading-relaxed text-mist">{s.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- What makes us different -->
+  <section class="border-t border-ivory/[0.06] py-20 lg:py-28">
+    <div class="lux-wide grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+      <div class="lg:sticky lg:top-28 h-max" data-reveal>
+        <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>What makes us different</p>
+        <h2 class="mt-5 display-2 text-ivory">Here is what really makes us different</h2>
+      </div>
+      <div class="max-w-2xl space-y-6" data-reveal>
+        <p class="text-[1.02rem] leading-relaxed text-mist">{about.difference}</p>
+        <p class="text-[1.02rem] leading-relaxed text-mist">{about.closing}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="border-t border-ivory/[0.06] bg-coal py-20 lg:py-28">
+    <div class="lux-narrow text-center">
+      <p class="eyebrow justify-center"><span class="h-px w-7 bg-gold/70"></span>Visit Blackline</p>
+      <h2 class="mt-5 display-2 text-ivory">Let us help you to buy one</h2>
+      <p class="mt-6 text-[1.05rem] leading-relaxed text-mist">
+        Browse our current selection in the showroom, or tell us about a car you would like to sell —
+        our team will guide you through every step.
+      </p>
+      <div class="mt-9 flex flex-wrap justify-center gap-3">
+        <a href="/our-cars" class="btn-gold">View our cars <ArrowRight class="h-4 w-4" /></a>
+        <a href="/sell-your-car" class="btn-outline">Sell your car</a>
+      </div>
+    </div>
+  </section>
+</Layout>

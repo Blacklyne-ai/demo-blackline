@@ -1,0 +1,64 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { contact, site } from '../data/site';
+import { MessageCircle, Phone } from '@lucide/astro';
+---
+<Layout title="Privacy — Blackline Motor Company" navVariant="solid"
+  description="How Blackline Motor Company handles your data. A static showcase, kept deliberately simple.">
+
+  <!-- Hero -->
+  <section class="bg-ink pt-[calc(var(--nav-h)+2rem)]">
+    <div class="lux-narrow pb-12 lg:pb-16">
+      <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>Privacy</p>
+      <h1 class="mt-5 display-1 text-ivory">Privacy note</h1>
+      <p class="mt-7 text-[1.05rem] leading-relaxed text-mist">
+        A static showcase, kept deliberately simple — here is exactly what happens with your data.
+      </p>
+    </div>
+  </section>
+
+  <!-- Body -->
+  <section class="border-t border-ivory/[0.06] bg-coal py-16 lg:py-24">
+    <div class="lux-narrow space-y-12">
+      <p class="font-display text-[clamp(1.4rem,2.6vw,2rem)] font-normal leading-[1.35] text-ivory" data-reveal>
+        This website is a static showcase for {site.legalName}. It does not run tracking cookies or third-party analytics, and it does not collect or store personal data on a server.
+      </p>
+
+      <div class="space-y-12">
+        <div class="border-t border-ivory/10 pt-12" data-reveal>
+          <h2 class="font-display text-[clamp(1.4rem,2.4vw,1.9rem)] font-normal leading-tight text-ivory">What is stored</h2>
+          <p class="mt-4 text-[0.98rem] leading-relaxed text-mist">The only data kept is your <strong class="font-medium text-ivory">saved cars (“wishlist”)</strong>, held locally in your own browser via <code class="rounded bg-gold/10 px-1.5 py-0.5 text-[0.86em] text-gold-deep">localStorage</code>. It never leaves your device and you can clear it any time from your browser settings.</p>
+        </div>
+
+        <div class="border-t border-ivory/10 pt-12" data-reveal>
+          <h2 class="font-display text-[clamp(1.4rem,2.4vw,1.9rem)] font-normal leading-tight text-ivory">When you contact us</h2>
+          <p class="mt-4 text-[0.98rem] leading-relaxed text-mist">If you send a buying, selling or consignment enquiry, it opens WhatsApp or your email app with a pre-filled message — you choose to send it. We then use those details only to answer your enquiry.</p>
+        </div>
+
+        <div class="border-t border-ivory/10 pt-12" data-reveal>
+          <h2 class="font-display text-[clamp(1.4rem,2.4vw,1.9rem)] font-normal leading-tight text-ivory">Embedded map</h2>
+          <p class="mt-4 text-[0.98rem] leading-relaxed text-mist">The location map is embedded from Google Maps. When it loads, Google may receive your IP address under its own privacy policy.</p>
+        </div>
+
+        <div class="border-t border-ivory/10 pt-12" data-reveal>
+          <h2 class="font-display text-[clamp(1.4rem,2.4vw,1.9rem)] font-normal leading-tight text-ivory">Contact</h2>
+          <p class="mt-4 text-[0.98rem] leading-relaxed text-mist">Questions about your data? Email <a href={contact.emailHref} class="text-gold-deep underline underline-offset-2 hover:text-gold">{contact.email}</a> or call <a href={contact.phonePrimaryHref} class="text-gold-deep underline underline-offset-2 hover:text-gold">{contact.phonePrimary}</a>.</p>
+        </div>
+      </div>
+
+      <p class="border-t border-ivory/10 pt-8 text-sm text-faint" data-reveal>Operator-TODO: replace with the operator’s formal UAE privacy policy / data-controller details before going live.</p>
+    </div>
+  </section>
+
+  <!-- Questions? -->
+  <section class="border-t border-ivory/[0.06] py-16 lg:py-20" data-reveal>
+    <div class="lux-narrow flex flex-col items-center text-center">
+      <p class="eyebrow mb-4"><span class="h-px w-7 bg-gold/70"></span>Questions?</p>
+      <h2 class="max-w-2xl font-display text-[clamp(1.7rem,3vw,2.4rem)] font-normal leading-tight text-ivory">We are happy to walk you through any of it.</h2>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <a href={contact.whatsapp} target="_blank" rel="noopener" class="btn-gold"><MessageCircle class="h-4 w-4" /> WhatsApp us</a>
+        <a href={contact.phonePrimaryHref} class="btn-outline"><Phone class="h-4 w-4" /> {contact.phonePrimary}</a>
+      </div>
+    </div>
+  </section>
+</Layout>

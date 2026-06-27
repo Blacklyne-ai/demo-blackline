@@ -1,0 +1,109 @@
+---
+import { Heart, ChevronLeft, ChevronRight, Gauge, Cog, Car as CarIcon } from '@lucide/astro';
+import { fmtAED, fmtKm, carTitle } from '../lib/cars';
+import type { Car } from '../lib/cars';
+
+interface Props { car: Car; eager?: boolean; sold?: boolean }
+const { car, eager = false, sold = false } = Astro.props;
+const href = `/our-cars/${car.slug}`;
+const imgs = car.images.slice(0, 8);
+const cover = imgs[0];
+const title = carTitle(car);
+---
+<article
+  class="group relative"
+  data-card
+  data-id={car.slug}
+  data-name={title.toLowerCase()}
+  data-make={car.make}
+  data-body={car.bodyType}
+  data-specs={car.specs}
+  data-year={car.year}
+  data-price={car.priceAED}
+  data-km={car.kilometers}
+>
+  <div class="group/img relative aspect-[4/3] overflow-hidden rounded-lg bg-coal" data-gallery data-idx="0" data-images={JSON.stringify(imgs)}>
+    <a href={href} class="block h-full w-full">
+      {cover ? (
+        <img data-cardimg src={cover} alt={title} width="640" height="480"
+          loading={eager ? 'eager' : 'lazy'} decoding="async"
+          class:list={['h-full w-full object-cover transition-transform duration-700 ease-luxe group-hover:scale-[1.04]', sold && 'opacity-[0.55] grayscale-[0.35]']} />
+      ) : (
+        <div class="grid h-full w-full place-items-center text-faint">No image</div>
+      )}
+    </a>
+
+    <span class="pointer-events-none absolute left-3 top-3 rounded-full bg-ink/70 px-2.5 py-1 text-[0.62rem] font-medium uppercase tracking-[0.16em] text-ivory/85 backdrop-blur-sm">{car.specs || car.bodyType}</span>
+    {sold && (
+      <span class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-ivory/40 bg-ink/70 px-5 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-ivory backdrop-blur-sm">Sold</span>
+    )}
+
+    {imgs.length > 1 && !sold && (
+      <>
+        <button data-img-prev aria-label="Previous photo"
+          class="absolute left-2.5 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center text-white opacity-0 transition-all duration-300 hover:text-gold-lite group-hover/img:opacity-100 max-md:opacity-95"
+          style="filter:drop-shadow(0 1px 4px rgb(0 0 0 / 0.7))"><ChevronLeft class="h-6 w-6" stroke-width={2.4} /></button>
+        <button data-img-next aria-label="Next photo"
+          class="absolute right-2.5 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center text-white opacity-0 transition-all duration-300 hover:text-gold-lite group-hover/img:opacity-100 max-md:opacity-95"
+          style="filter:drop-shadow(0 1px 4px rgb(0 0 0 / 0.7))"><ChevronRight class="h-6 w-6" stroke-width={2.4} /></button>
+        <div data-img-dots class="pointer-events-none absolute bottom-2.5 left-1/2 flex -translate-x-1/2 gap-1.5">
+          {imgs.map((_, i) => (
+            <span class:list={['h-1.5 w-1.5 rounded-full transition-colors', i === 0 ? 'bg-white' : 'bg-white/45']}></span>
+          ))}
+        </div>
+      </>
+    )}
+
+    {!sold && (
+      <button data-wish data-id={car.slug} aria-label={`Save ${title}`} aria-pressed="false"
+        class="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full text-white/85 backdrop-blur-sm transition-colors hover:text-gold-lite"
+        style="background:rgb(0 0 0 / 0.4)">
+        <Heart class="h-[17px] w-[17px]" />
+      </button>
+    )}
+  </div>
+
+  <div class="pt-4">
+    <a href={href}><h3 class="truncate font-display text-[1.15rem] font-semibold leading-tight text-ivory transition-colors group-hover:text-gold sm:text-[1.3rem]">{title}</h3></a>
+    <!-- quick specs -->
+    <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.72rem] text-mist">
+      <span class="inline-flex items-center gap-1"><Gauge class="h-3.5 w-3.5 text-faint" /> {fmtKm(car.kilometers)}</span>
+      <span class="inline-flex items-center gap-1"><Cog class="h-3.5 w-3.5 text-faint" /> {car.transmission}</span>
+      {car.bodyType && <span class="inline-flex items-center gap-1"><CarIcon class="h-3.5 w-3.5 text-faint" /> {car.bodyType}</span>}
+    </div>
+    <div class="mt-3 flex items-end justify-between border-t border-ivory/[0.08] pt-3">
+      <div>
+        <p class="price-aed text-[0.98rem] font-semibold text-gold">{fmtAED(car.priceAED)}</p>
+        {car.monthlyAED > 0 && !sold && <p class="price-aed mt-0.5 text-[0.68rem] text-faint">or from {fmtAED(car.monthlyAED)} / mo</p>}
+      </div>
+      {!sold && <span class="link-arrow text-[0.68rem] text-ivory/70 group-hover:text-gold">View →</span>}
+    </div>
+  </div>
+</article>
+
+<script>
+  // Inline image carousel for car cards (delegated, runs once globally)
+  if (!(window as any).__cardGallery) {
+    (window as any).__cardGallery = true;
+    const step = (btn: HTMLElement, dir: number) => {
+      const g = btn.closest('[data-gallery]') as HTMLElement | null;
+      if (!g) return;
+      let imgs: string[] = [];
+      try { imgs = JSON.parse(g.dataset.images || '[]'); } catch {}
+      if (imgs.length < 2) return;
+      let idx = (Number(g.dataset.idx || 0) + dir + imgs.length) % imgs.length;
+      g.dataset.idx = String(idx);
+      const img = g.querySelector('[data-cardimg]') as HTMLImageElement | null;
+      if (img) img.src = imgs[idx];
+      const dots = g.querySelectorAll('[data-img-dots] span');
+      dots.forEach((d, i) => { (d as HTMLElement).className = `h-1.5 w-1.5 rounded-full transition-colors ${i === idx ? 'bg-white' : 'bg-white/45'}`; });
+    };
+    document.addEventListener('click', (e) => {
+      const prev = (e.target as HTMLElement).closest('[data-img-prev]') as HTMLElement | null;
+      const next = (e.target as HTMLElement).closest('[data-img-next]') as HTMLElement | null;
+      if (!prev && !next) return;
+      e.preventDefault(); e.stopPropagation();
+      step((prev || next)!, prev ? -1 : 1);
+    });
+  }
+</script>
