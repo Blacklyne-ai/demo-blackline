@@ -1,12 +1,12 @@
 /* ──────────────────────────────────────────────────────────────
    Blackline Motor Company — Design System (Single Source of Truth: :root)
-   DARK cinematic luxury, derived from a strictly MONOCHROME logo
-   (white wordmark + a single diagonal "line" through the B). The brand is
-   literally black + a line, so the system is near-monochrome: deep cinematic
-   black, brushed-platinum text, and ONE restrained warm-metal accent
-   (champagne) used only for prices, primary CTAs and hairline highlights.
-   The diagonal logo line returns as a graphic motif (.bl-line / dividers).
-   Display = Sora (architectural geometric). UI = Inter. Self-hosted, latin.
+   LIGHT, airy editorial luxury. The inventory photos are studio shots on a
+   light seamless backdrop, so the site is bright: warm-white canvas, near-black
+   ink, a deep-bronze accent — with a few genuinely DARK feature bands (hero
+   strip, sell band, footer) for contrast and brand (Blackline = black + a line).
+   Token names are kept from the dark build but VALUES are LIGHT now: `ink` = page
+   ground, `ivory` = dark text/hairlines. Dark bands use the fixed night/cream/gilt
+   palette. Display = Sora (architectural). UI = Inter. Self-hosted, latin.
    ────────────────────────────────────────────────────────────── */
 @tailwind base;
 @tailwind components;
@@ -20,17 +20,23 @@
 @font-face { font-family: 'Sora'; font-style: normal; font-weight: 800; font-display: optional; src: url('/fonts/sora-800.woff2') format('woff2'); }
 
 :root {
-  --rgb-ink: 9 9 11;            /* #09090B deepest cinematic ground (bg-ink) */
-  --rgb-coal: 16 16 19;         /* #101013 alternating section */
-  --rgb-graphite: 22 22 26;     /* #16161A card / panel */
-  --rgb-steel: 36 36 42;        /* #24242A raised / border fill */
-  --rgb-ivory: 243 241 234;     /* #F3F1EA PRIMARY text on dark */
-  --rgb-mist: 171 166 156;      /* #ABA69C secondary text */
-  --rgb-faint: 116 113 106;     /* #74716A faint label / tertiary */
-  --rgb-line: 243 241 234;      /* hairline base = ivory (used at low alpha) */
-  --rgb-gold: 199 169 119;      /* #C7A977 restrained champagne accent */
-  --rgb-gold-lite: 226 204 162; /* #E2CCA2 highlight / shimmer */
-  --rgb-gold-deep: 158 130 84;  /* #9E8254 deep metal, borders/hover */
+  /* LIGHT tokens (most of the site) */
+  --rgb-ink: 250 249 245;       /* #FAF9F5 warm-white page ground (bg-ink) */
+  --rgb-coal: 244 241 233;      /* #F4F1E9 sand — alternating section */
+  --rgb-graphite: 255 255 255;  /* #FFFFFF cards / panels */
+  --rgb-steel: 231 227 218;     /* #E7E3DA light raised / fill */
+  --rgb-ivory: 24 22 19;        /* #181613 PRIMARY DARK text + hairlines */
+  --rgb-mist: 92 88 81;         /* #5C5851 secondary text */
+  --rgb-faint: 145 140 131;     /* #918C83 tertiary / labels */
+  --rgb-line: 24 22 19;         /* hairline base = ink (used at low alpha) */
+  --rgb-gold: 142 109 54;       /* #8E6D36 deep bronze accent (readable on white) */
+  --rgb-gold-lite: 178 142 84;  /* #B28E54 */
+  --rgb-gold-deep: 110 84 40;   /* #6E5428 */
+  /* fixed DARK-section palette */
+  --rgb-night: 14 13 11;        /* #0E0D0B */
+  --rgb-coalnight: 22 20 15;    /* #16140F raised on dark */
+  --rgb-cream: 244 242 235;     /* #F4F2EB text on dark */
+  --rgb-gilt: 199 169 119;      /* #C7A977 champagne on dark */
   --nav-h: 80px;
 }
 
@@ -55,13 +61,13 @@
     font-weight: 600; letter-spacing: -0.02em; line-height: 1.05;
   }
   h4 { font-family: 'Sora', system-ui, sans-serif; font-weight: 600; letter-spacing: -0.01em; }
-  ::selection { background: rgb(var(--rgb-gold) / 0.26); color: rgb(var(--rgb-ivory)); }
-  :focus-visible { outline: 1px solid rgb(var(--rgb-gold) / 0.85); outline-offset: 3px; }
+  ::selection { background: rgb(var(--rgb-gold) / 0.22); color: rgb(var(--rgb-ivory)); }
+  :focus-visible { outline: 2px solid rgb(var(--rgb-gold) / 0.85); outline-offset: 3px; }
   img { content-visibility: auto; }
-  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar { width: 11px; height: 11px; }
   ::-webkit-scrollbar-track { background: rgb(var(--rgb-coal)); }
   ::-webkit-scrollbar-thumb { background: rgb(var(--rgb-steel)); border-radius: 999px; border: 3px solid rgb(var(--rgb-coal)); }
-  ::-webkit-scrollbar-thumb:hover { background: rgb(var(--rgb-gold) / 0.55); }
+  ::-webkit-scrollbar-thumb:hover { background: rgb(var(--rgb-gold) / 0.5); }
 }
 
 @layer components {
@@ -69,48 +75,53 @@
   .lux-wide { @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-14; }
   .lux-narrow { @apply mx-auto w-full max-w-3xl px-5 sm:px-8; }
 
-  .eyebrow { @apply inline-flex items-center gap-2.5 text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-gold; }
+  .eyebrow { @apply inline-flex items-center gap-2.5 text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-gold; }
 
-  .display-1 { @apply font-display text-[clamp(2.7rem,7vw,6rem)] font-bold leading-[0.98] tracking-[-0.03em]; }
-  .display-2 { @apply font-display text-[clamp(2rem,4.5vw,3.6rem)] font-semibold leading-[1.04] tracking-[-0.025em]; }
-  .display-3 { @apply font-display text-[clamp(1.5rem,3vw,2.4rem)] font-semibold leading-[1.1] tracking-[-0.02em]; }
+  .display-1 { @apply font-display text-[clamp(2.6rem,6.4vw,5.4rem)] font-bold leading-[1.0] tracking-[-0.03em]; }
+  .display-2 { @apply font-display text-[clamp(1.9rem,4.2vw,3.3rem)] font-semibold leading-[1.06] tracking-[-0.025em]; }
+  .display-3 { @apply font-display text-[clamp(1.45rem,2.8vw,2.2rem)] font-semibold leading-[1.12] tracking-[-0.02em]; }
 
-  /* Buttons — quiet, architectural */
-  .btn { @apply inline-flex items-center justify-center gap-2 text-[0.82rem] font-medium leading-none transition-all duration-500 ease-luxe; }
-  .btn-primary { @apply btn rounded-full bg-ivory px-7 py-3.5 text-ink hover:bg-white; }
-  .btn-gold { @apply btn rounded-full bg-gold px-7 py-3.5 text-ink hover:bg-gold-lite; font-weight: 600; }
-  .btn-outline { @apply btn rounded-full border border-ivory/25 px-7 py-3.5 text-ivory hover:border-ivory/70 hover:bg-ivory/5; }
+  /* Buttons — light theme primaries */
+  .btn { @apply inline-flex items-center justify-center gap-2 text-[0.82rem] font-medium leading-none transition-all duration-300 ease-luxe; }
+  .btn-ink { @apply btn rounded-full bg-[#16140F] px-7 py-3.5 text-[#F6F3EC] hover:bg-[#272219]; }
+  .btn-gold { @apply btn rounded-full bg-gold px-7 py-3.5 text-[#FBF8F2] hover:bg-gold-deep; font-weight: 600; }
+  .btn-outline { @apply btn rounded-full border border-ivory/20 px-7 py-3.5 text-ivory hover:border-ivory/50 hover:bg-ivory/[0.04]; }
   .btn-ghost { @apply btn px-2 py-1 text-mist hover:text-ivory; }
   .btn-block { @apply w-full; }
+  /* on a dark band, the outline/secondary uses cream */
+  .btn-cream { @apply btn rounded-full bg-cream px-7 py-3.5 text-[#16140F] hover:bg-white; }
+  .btn-outline-cream { @apply btn rounded-full border border-cream/30 px-7 py-3.5 text-cream hover:border-cream/70 hover:bg-cream/[0.06]; }
 
-  .link-arrow { @apply inline-flex items-center gap-2 text-[0.78rem] font-medium uppercase tracking-[0.18em] text-ivory transition-colors hover:text-gold; }
+  .link-arrow { @apply inline-flex items-center gap-2 text-[0.78rem] font-medium uppercase tracking-[0.16em] text-ivory transition-colors hover:text-gold; }
   .link-arrow svg { transition: transform .5s cubic-bezier(.22,1,.36,1); }
   .link-arrow:hover svg { transform: translateX(4px); }
 
   /* Surfaces */
-  .card { @apply rounded-xl border border-ivory/[0.08] bg-graphite; }
-  .hairline { @apply border-ivory/[0.08]; }
-  .rule { @apply h-px w-full bg-ivory/[0.08]; }
-  .rule-gold { height: 1px; background: linear-gradient(90deg, rgb(var(--rgb-gold) / 0.55), transparent); }
+  .card { @apply rounded-2xl border border-ivory/[0.09] bg-graphite shadow-[0_1px_2px_rgb(20_18_15/0.04),0_18px_44px_-28px_rgb(20_18_15/0.22)]; }
+  .hairline { @apply border-ivory/[0.09]; }
+  .rule { @apply h-px w-full bg-ivory/[0.1]; }
+  .rule-gold { height: 1px; background: linear-gradient(90deg, rgb(var(--rgb-gold) / 0.5), transparent); }
 
-  .chip { @apply inline-flex items-center gap-1.5 rounded-full border border-ivory/[0.12] px-3.5 py-1.5 text-[0.72rem] font-medium uppercase tracking-[0.12em] text-mist transition-colors; }
+  .chip { @apply inline-flex items-center gap-1.5 rounded-full border border-ivory/[0.14] bg-graphite/60 px-3.5 py-1.5 text-[0.72rem] font-medium uppercase tracking-[0.1em] text-mist transition-colors; }
 
-  /* Dark glass nav */
-  .glass { background: rgb(var(--rgb-ink) / 0.62); backdrop-filter: blur(20px) saturate(1.2); -webkit-backdrop-filter: blur(20px) saturate(1.2); }
+  /* Light glass nav (over light page) */
+  .glass { background: rgb(var(--rgb-ink) / 0.78); backdrop-filter: blur(20px) saturate(1.3); -webkit-backdrop-filter: blur(20px) saturate(1.3); }
+  /* Dark glass (nav over a dark hero band) */
+  .glass-dark { background: rgb(var(--rgb-night) / 0.55); backdrop-filter: blur(20px) saturate(1.2); -webkit-backdrop-filter: blur(20px) saturate(1.2); }
 
   /* Filter / category pills */
-  .cat-pill { @apply shrink-0 whitespace-nowrap rounded-full border border-ivory/[0.12] px-4 py-2 text-[0.75rem] font-medium uppercase tracking-[0.1em] text-mist transition-all duration-300; }
-  .cat-pill:hover { @apply border-ivory/30 text-ivory; }
-  .cat-pill.is-on { @apply border-ivory bg-ivory text-ink; }
+  .cat-pill { @apply shrink-0 whitespace-nowrap rounded-full border border-ivory/[0.16] bg-graphite px-4 py-2 text-[0.75rem] font-medium uppercase tracking-[0.08em] text-mist transition-all duration-300; }
+  .cat-pill:hover { @apply border-ivory/35 text-ivory; }
+  .cat-pill.is-on { @apply border-[#16140F] bg-[#16140F] text-cream; }
 
-  /* The signature diagonal "Black-line" — a thin slash, echoing the logo mark */
-  .bl-line { background: linear-gradient(105deg, transparent 0%, rgb(var(--rgb-gold) / 0.0) 42%, rgb(var(--rgb-gold) / 0.7) 50%, rgb(var(--rgb-gold) / 0.0) 58%, transparent 100%); }
+  /* The signature diagonal "Black-line" slash */
+  .bl-line { background: linear-gradient(105deg, transparent 0%, rgb(var(--rgb-gold) / 0) 42%, rgb(var(--rgb-gold) / 0.55) 50%, rgb(var(--rgb-gold) / 0) 58%, transparent 100%); }
 
   /* Scroll reveal — gated on html.js (content visible without JS) */
-  .js [data-reveal], .js [data-slide] { opacity: 0; will-change: opacity, transform; transition: opacity .9s ease, transform 1.05s cubic-bezier(.22,1,.36,1); }
-  .js [data-reveal] { transform: translateY(30px); }
-  .js [data-slide="left"] { transform: translateX(-48px); }
-  .js [data-slide="right"] { transform: translateX(48px); }
+  .js [data-reveal], .js [data-slide] { opacity: 0; will-change: opacity, transform; transition: opacity .8s ease, transform 1s cubic-bezier(.22,1,.36,1); }
+  .js [data-reveal] { transform: translateY(26px); }
+  .js [data-slide="left"] { transform: translateX(-44px); }
+  .js [data-slide="right"] { transform: translateX(44px); }
   .js [data-reveal].fx-in, .js [data-slide].fx-in { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: reduce) { .js [data-reveal], .js [data-slide] { opacity: 1 !important; transform: none !important; transition: none !important; } }
 
@@ -118,7 +129,7 @@
   [data-wish].is-saved { color: rgb(var(--rgb-gold)); }
   [data-wish].is-saved svg { fill: currentColor; }
 
-  .fx-img { will-change: transform; transform: scale(1.18); }
+  .fx-img { will-change: transform; transform: scale(1.12); }
   .parallax { will-change: transform; }
-  .parallax img, img.parallax { transform: scale(1.14); }
+  .parallax img, img.parallax { transform: scale(1.1); }
 }

@@ -20,10 +20,16 @@ export default {
         faint: 'rgb(var(--rgb-faint) / <alpha-value>)',      // #7C786F tertiary
         line: 'rgb(var(--rgb-line) / <alpha-value>)',        // hairline base
         gold: {
-          DEFAULT: 'rgb(var(--rgb-gold) / <alpha-value>)',   // #C6A45C champagne accent
-          lite: 'rgb(var(--rgb-gold-lite) / <alpha-value>)', // #E4CE97 highlight / shimmer
-          deep: 'rgb(var(--rgb-gold-deep) / <alpha-value>)', // #93824B logo-true, borders/hover
+          DEFAULT: 'rgb(var(--rgb-gold) / <alpha-value>)',   // #8E6D36 bronze accent (readable on white)
+          lite: 'rgb(var(--rgb-gold-lite) / <alpha-value>)', // #B28E54 highlight
+          deep: 'rgb(var(--rgb-gold-deep) / <alpha-value>)', // #6E5428 deep
         },
+        // Fixed DARK-section palette (hero band, footer, feature bands) — independent
+        // of the light tokens above, so dark sections stay genuinely dark.
+        night: 'rgb(var(--rgb-night) / <alpha-value>)',      // #0E0D0B
+        coalnight: 'rgb(var(--rgb-coalnight) / <alpha-value>)', // #16140F raised on dark
+        cream: 'rgb(var(--rgb-cream) / <alpha-value>)',      // #F4F2EB text on dark
+        gilt: 'rgb(var(--rgb-gilt) / <alpha-value>)',        // #C7A977 champagne on dark
       },
       fontFamily: {
         sans: ['"Inter Variable"', 'Inter', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],

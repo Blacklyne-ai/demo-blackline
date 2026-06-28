@@ -39,8 +39,8 @@ const testimonials = [
       {wall.map((c) => (
         <a href={`/our-cars/${c.slug}`} class="group relative overflow-hidden rounded-xl border border-ivory/[0.08] bg-coal">
           <img src={c.images[0]} alt={`${c.year} ${c.make} ${c.model}`} width="640" height="480" loading="lazy" decoding="async"
-            class="aspect-[4/3] w-full object-cover opacity-[0.62] grayscale-[0.3] transition-all duration-500 group-hover:opacity-90 group-hover:grayscale-0" />
-          <span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/90 to-transparent p-4 text-sm font-medium text-ivory">{c.make} {c.model}</span>
+            class="aspect-[4/3] w-full object-cover grayscale-[0.25] transition-all duration-500 group-hover:grayscale-0 group-hover:scale-[1.03]" />
+          <span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#16140F]/85 to-transparent p-4 pt-10 text-sm font-medium text-cream">{c.make} {c.model}</span>
         </a>
       ))}
     </div>

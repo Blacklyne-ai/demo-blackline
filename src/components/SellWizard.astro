@@ -10,8 +10,8 @@ interface Props {
 const { preselectMake = '', compact = false, id = 'sell' } = Astro.props;
 // strip a tel: number to digits for the wa.me link composed client-side
 const waNumber = contact.whatsapp.replace(/\D/g, '');
-const inputCls = 'w-full rounded-xl border border-ivory/15 bg-ink/60 px-4 text-ivory placeholder:text-faint focus:border-gold/70 focus:outline-none focus:ring-0 transition-colors';
-const selCls = inputCls + " appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2214%22 height=%2214%22 fill=%22none%22 stroke=%22%23ABA69C%22 stroke-width=%222%22 viewBox=%220 0 24 24%22><path d=%22M6 9l6 6 6-6%22/></svg>')] bg-[length:14px] bg-[right_1rem_center] bg-no-repeat";
+const inputCls = 'w-full rounded-xl border border-ivory/[0.14] bg-[#FAF9F5] px-4 text-ivory placeholder:text-faint focus:border-gold/70 focus:bg-white focus:outline-none focus:ring-0 transition-colors';
+const selCls = inputCls + " appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2214%22 height=%2214%22 fill=%22none%22 stroke=%22%235C5851%22 stroke-width=%222%22 viewBox=%220 0 24 24%22><path d=%22M6 9l6 6 6-6%22/></svg>')] bg-[length:14px] bg-[right_1rem_center] bg-no-repeat";
 ---
 <div data-wizard data-wa={waNumber} class:list={['card relative overflow-hidden', compact ? 'p-5 sm:p-7' : 'p-6 sm:p-9']}>
   <!-- signature diagonal line accent (echoes the logo) -->

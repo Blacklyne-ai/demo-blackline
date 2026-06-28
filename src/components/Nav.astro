@@ -16,10 +16,10 @@ const bodies = bodyTypes(cars);
 <!-- Floating pill menu -->
 <header data-nav class="fixed inset-x-0 top-0 z-50">
   <div class="lux-wide flex justify-center pt-3 sm:pt-4">
-    <div data-pill class="glass flex w-full max-w-6xl items-center gap-2 rounded-full border border-ivory/10 px-2.5 py-2 shadow-[0_12px_40px_-16px_rgba(0,0,0,0.6)] transition-shadow duration-500">
-      <!-- Logo (white wordmark) -->
+    <div data-pill class="glass flex w-full max-w-6xl items-center gap-2 rounded-full border border-ivory/[0.08] px-2.5 py-2 shadow-[0_8px_30px_-14px_rgba(20,18,15,0.28)] transition-shadow duration-500">
+      <!-- Logo (black wordmark on the light nav) -->
       <a href="/" class="shrink-0 pl-2.5 pr-1" aria-label={`${site.name} — home`}>
-        <img src="/logo.png" alt={site.name} width="220" height="99" class="h-7 w-auto sm:h-[30px]" />
+        <img src="/logo-ink.png" alt={site.name} width="220" height="99" class="h-7 w-auto sm:h-[30px]" />
       </a>
 
       <!-- Desktop links -->
@@ -71,7 +71,7 @@ const bodies = bodyTypes(cars);
           <span data-wish-count class="absolute -right-0 -top-0 hidden min-w-[17px] rounded-full bg-gold px-1 text-center text-[10px] font-semibold leading-[17px] text-ink">0</span>
         </a>
         <a href={contact.phonePrimaryHref} class="hidden rounded-full p-2.5 text-ivory/70 transition-colors hover:bg-ivory/5 hover:text-gold xl:inline-flex" aria-label="Call us"><Phone class="h-[18px] w-[18px]" /></a>
-        <a href="/sell-your-car" class="hidden rounded-full bg-gold px-5 py-2.5 text-[0.72rem] font-semibold uppercase tracking-[0.13em] text-ink transition-colors hover:bg-gold-lite lg:inline-flex">Get my valuation</a>
+        <a href="/sell-your-car" class="hidden rounded-full bg-[#16140F] px-5 py-2.5 text-[0.72rem] font-semibold uppercase tracking-[0.13em] text-cream transition-colors hover:bg-gold hover:text-[#FBF8F2] lg:inline-flex">Get my valuation</a>
         <button data-menu-open class="rounded-full p-2 text-ivory lg:hidden" aria-label="Open menu" aria-expanded="false"><Menu class="h-6 w-6" /></button>
       </div>
     </div>
@@ -80,10 +80,10 @@ const bodies = bodyTypes(cars);
 
 <!-- Mobile overlay menu -->
 <div data-menu class="fixed inset-0 z-[60] hidden">
-  <div data-menu-backdrop class="absolute inset-0 bg-ink/70 backdrop-blur-sm"></div>
-  <div data-menu-panel class="absolute right-0 top-0 flex h-full w-[88%] max-w-sm translate-x-full flex-col bg-graphite shadow-[0_0_80px_rgba(0,0,0,0.6)] transition-transform duration-400 ease-luxe">
+  <div data-menu-backdrop class="absolute inset-0 bg-[#16140F]/45 backdrop-blur-sm"></div>
+  <div data-menu-panel class="absolute right-0 top-0 flex h-full w-[88%] max-w-sm translate-x-full flex-col bg-ink shadow-[0_0_80px_rgba(20,18,15,0.25)] transition-transform duration-400 ease-luxe">
     <div class="flex h-[var(--nav-h)] items-center justify-between px-6">
-      <img src="/logo.png" alt={site.name} width="180" height="81" class="h-6 w-auto" />
+      <img src="/logo-ink.png" alt={site.name} width="180" height="81" class="h-6 w-auto" />
       <button data-menu-close class="rounded-full p-2 text-ivory" aria-label="Close menu"><X class="h-6 w-6" /></button>
     </div>
     <nav class="flex flex-col gap-0.5 overflow-y-auto px-6 pb-8 pt-2" aria-label="Mobile">
@@ -103,7 +103,7 @@ const bodies = bodyTypes(cars);
 <script>
   const pill = document.querySelector('[data-pill]') as HTMLElement | null;
   if (pill) {
-    const onScroll = () => pill.classList.toggle('shadow-[0_18px_50px_-12px_rgba(0,0,0,0.7)]', window.scrollY > 20);
+    const onScroll = () => pill.classList.toggle('shadow-[0_14px_40px_-12px_rgba(20,18,15,0.3)]', window.scrollY > 20);
     onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
   }
   const menu = document.querySelector('[data-menu]') as HTMLElement | null;

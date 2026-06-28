@@ -94,27 +94,27 @@ const serviceIcons: Record<string, any> = { Car, Tag, Handshake, Repeat, Landmar
     </div>
   </section>
 
-  <!-- ── CONSIGNMENT TEASER ────────────────────────────────────────── -->
-  <section class="border-t border-ivory/[0.06] bg-coal py-20 lg:py-28">
+  <!-- ── CONSIGNMENT TEASER (dark band for contrast / rhythm) ───────── -->
+  <section class="bg-night py-20 text-cream lg:py-28">
     <div class="lux-wide grid items-center gap-10 lg:grid-cols-[1.1fr_1fr]">
       <div data-reveal>
-        <p class="eyebrow"><span class="h-px w-7 bg-gold/70"></span>Vehicle Consignment</p>
-        <h2 class="mt-5 display-2 text-ivory">Let us sell it for you</h2>
-        <p class="mt-6 max-w-lg text-[1.02rem] leading-relaxed text-mist">
+        <p class="eyebrow text-gilt"><span class="h-px w-7 bg-gilt/70"></span>Vehicle Consignment</p>
+        <h2 class="mt-5 display-2 text-cream">Let us sell it for you</h2>
+        <p class="mt-6 max-w-lg text-[1.02rem] leading-relaxed text-cream/65">
           Let us invite you to our luxury showroom for a coffee and a chat with our team, if your car
           meets our high standards, we will work together to create a consignment agreement.
         </p>
-        <p class="mt-4 max-w-lg text-[0.95rem] leading-relaxed text-faint">
+        <p class="mt-4 max-w-lg text-[0.95rem] leading-relaxed text-cream/45">
           Professional marketing, security and convenience, protection for buyer and seller — and as a
           seller, simply no fees to pay.
         </p>
-        <a href="/consignment" class="link-arrow mt-8">Find out more <ArrowRight class="h-4 w-4" /></a>
+        <a href="/consignment" class="link-arrow mt-8 text-cream hover:text-gilt">Find out more <ArrowRight class="h-4 w-4" /></a>
       </div>
-      <div class="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-ivory/[0.08] bg-ivory/[0.08]" data-reveal>
+      <div class="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-cream/10 bg-cream/10" data-reveal>
         {[['No fees', 'for the seller'], ['Pro photography', 'in-house studio'], ['Dubizzle & Dubicars', 'plus our own channels'], ['RTA transfer', 'handled for you']].map(([a, b]) => (
-          <div class="bg-graphite p-6">
-            <p class="font-display text-lg font-semibold text-ivory">{a}</p>
-            <p class="mt-1 text-sm text-mist">{b}</p>
+          <div class="bg-night p-6">
+            <p class="font-display text-lg font-semibold text-cream">{a}</p>
+            <p class="mt-1 text-sm text-cream/55">{b}</p>
           </div>
         ))}
       </div>
@@ -162,7 +162,7 @@ const serviceIcons: Record<string, any> = { Car, Tag, Handshake, Repeat, Landmar
       </div>
       <div class="overflow-hidden rounded-2xl border border-ivory/[0.08]">
         <iframe title="Blackline Motor Company on the map" src={contact.mapEmbed} loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade" class="h-full min-h-[340px] w-full" style="filter:grayscale(0.3) invert(0.92) hue-rotate(180deg) contrast(0.9)"></iframe>
+          referrerpolicy="no-referrer-when-downgrade" class="h-full min-h-[340px] w-full" style="filter:grayscale(0.25) contrast(1.02)"></iframe>
       </div>
     </div>
   </section>
